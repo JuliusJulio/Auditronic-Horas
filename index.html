@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AuditHoras</title>
+<title>Auditronic</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#0e1117; --bg2:#151921; --bg3:#1c2130; --bg4:#242b3d;
-  --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.11);
-  --text:#e8ecf5; --muted:#6b7494; --muted2:#8e97b8;
-  --accent:#4f8ef7; --accent2:#7c5cfc;
-  --green:#34d399; --amber:#fbbf24; --red:#f87171; --teal:#2dd4bf;
+  --bg:#f0f7f2; --bg2:#ffffff; --bg3:#e8f5ee; --bg4:#d4edde;
+  --border:rgba(22,101,52,0.1); --border2:rgba(22,101,52,0.2);
+  --text:#0f2d1a; --muted:#4a7c5e; --muted2:#2d6a4f;
+  --accent:#16a34a; --accent2:#15803d; --accent3:#166534;
+  --green:#16a34a; --amber:#d97706; --red:#dc2626; --teal:#0d9488;
+  --sidebar:#0f2d1a; --sidebar2:#1a3d26; --sidebar3:#243d2e;
+  --sidebar-text:#e8f5ee; --sidebar-muted:#6b9e7e; --sidebar-active:#16a34a;
   --font:'Outfit',sans-serif; --mono:'DM Mono',monospace; --serif:'DM Serif Display',serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -19,27 +21,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .app{display:flex;min-height:100vh;}
 
 /* SIDEBAR */
-.sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;}
-.logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);}
-.logo-mark{font-family:var(--serif);font-size:21px;color:var(--text);}
-.logo-mark span{color:var(--accent);}
-.logo-sub{font-size:9px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:3px;font-family:var(--mono);}
+.sidebar{width:240px;background:var(--sidebar);border-right:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;flex-shrink:0;}
+.logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px;}
+.logo-img{width:38px;height:38px;object-fit:contain;flex-shrink:0;}
+.logo-text{}
+.logo-mark{font-family:var(--serif);font-size:20px;color:#fff;letter-spacing:-0.3px;}
+.logo-mark span{color:#4ade80;}
+.logo-sub{font-size:9px;color:var(--sidebar-muted);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px;font-family:var(--mono);line-height:1.4;}
 .nav{padding:10px 8px;flex:1;}
-.nav-section{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);padding:14px 10px 5px;font-family:var(--mono);}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--muted2);font-size:13px;transition:all 0.15s;margin-bottom:1px;}
-.nav-item:hover{background:var(--bg3);color:var(--text);}
-.nav-item.active{background:var(--bg4);color:var(--text);font-weight:500;}
+.nav-section{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--sidebar-muted);padding:14px 10px 5px;font-family:var(--mono);}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--sidebar-muted);font-size:13px;transition:all 0.15s;margin-bottom:1px;}
+.nav-item:hover{background:var(--sidebar2);color:var(--sidebar-text);}
+.nav-item.active{background:var(--sidebar-active);color:#fff;font-weight:500;}
 .nav-icon{font-size:15px;width:18px;text-align:center;}
-.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);}
+.sidebar-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,0.07);}
 .user-chip{display:flex;align-items:center;gap:10px;}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;}
-.user-info .name{font-size:13px;font-weight:500;}
-.user-info .role{font-size:11px;color:var(--muted);}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#166534);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,0.15);}
+.user-info .name{font-size:13px;font-weight:500;color:var(--sidebar-text);}
+.user-info .role{font-size:11px;color:var(--sidebar-muted);}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow-x:hidden;}
-.page-header{padding:24px 30px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;}
-.page-title{font-family:var(--serif);font-size:24px;}
+.main{flex:1;display:flex;flex-direction:column;overflow-x:hidden;background:var(--bg);}
+.page-header{padding:22px 30px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;background:var(--bg2);}
+.page-title{font-family:var(--serif);font-size:24px;color:var(--text);}
 .page-sub{font-size:12px;color:var(--muted);margin-top:4px;}
 .header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
 .content{padding:24px 30px;flex:1;}
@@ -47,11 +51,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:var(--font);transition:all 0.15s;white-space:nowrap;}
 .btn-primary{background:var(--accent);color:#fff;}
-.btn-primary:hover{background:#3d7ef0;}
+.btn-primary:hover{background:var(--accent2);}
 .btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border2);}
 .btn-ghost:hover{background:var(--bg4);}
-.btn-danger{background:rgba(248,113,113,0.1);color:var(--red);border:1px solid rgba(248,113,113,0.2);}
-.btn-danger:hover{background:rgba(248,113,113,0.2);}
+.btn-danger{background:rgba(220,38,38,0.07);color:var(--red);border:1px solid rgba(220,38,38,0.15);}
+.btn-danger:hover{background:rgba(220,38,38,0.14);}
 .btn-sm{padding:5px 11px;font-size:12px;border-radius:6px;}
 
 /* VIEWS */
@@ -60,51 +64,52 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 
 /* KPI GRID */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
-.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;border-left:3px solid transparent;}
 .kpi-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:var(--mono);}
 .kpi-value{font-size:30px;font-weight:600;margin:5px 0 2px;letter-spacing:-1px;}
 .kpi-delta{font-size:11px;color:var(--muted);}
-.kpi-blue .kpi-value{color:var(--accent);}
-.kpi-green .kpi-value{color:var(--green);}
-.kpi-amber .kpi-value{color:var(--amber);}
-.kpi-teal .kpi-value{color:var(--teal);}
+.kpi-green{border-left-color:var(--green);} .kpi-green .kpi-value{color:var(--green);}
+.kpi-emerald{border-left-color:#059669;} .kpi-emerald .kpi-value{color:#059669;}
+.kpi-amber{border-left-color:var(--amber);} .kpi-amber .kpi-value{color:var(--amber);}
+.kpi-teal{border-left-color:var(--teal);} .kpi-teal .kpi-value{color:var(--teal);}
 
 /* TABLES */
 .table-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
-.table-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.table-title{font-size:14px;font-weight:500;}
+.table-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2);}
+.table-title{font-size:14px;font-weight:500;color:var(--text);}
 .table-sub{font-size:12px;color:var(--muted);}
 table{width:100%;border-collapse:collapse;}
-thead th{padding:10px 16px;text-align:left;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-family:var(--mono);font-weight:400;border-bottom:1px solid var(--border);}
+thead th{padding:10px 16px;text-align:left;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-family:var(--mono);font-weight:400;border-bottom:1px solid var(--border);background:var(--bg3);}
 tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
 tbody tr:last-child{border-bottom:none;}
 tbody tr:hover{background:var(--bg3);}
-tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
+tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
 
 /* PROGRESS */
 .prog-wrap{display:flex;align-items:center;gap:8px;}
-.prog-bar{flex:1;height:4px;background:var(--bg4);border-radius:99px;overflow:hidden;min-width:70px;}
+.prog-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;min-width:70px;}
 .prog-fill{height:100%;border-radius:99px;}
 .prog-pct{font-size:11px;font-family:var(--mono);color:var(--muted);min-width:34px;text-align:right;}
 
 /* BADGES */
-.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:500;font-family:var(--mono);}
-.badge-green{background:rgba(52,211,153,0.1);color:var(--green);}
-.badge-amber{background:rgba(251,191,36,0.1);color:var(--amber);}
-.badge-red{background:rgba(248,113,113,0.1);color:var(--red);}
-.badge-blue{background:rgba(79,142,247,0.1);color:var(--accent);}
-.badge-teal{background:rgba(45,212,191,0.1);color:var(--teal);}
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:500;font-family:var(--mono);}
+.badge-green{background:rgba(22,163,74,0.1);color:#15803d;}
+.badge-amber{background:rgba(217,119,6,0.1);color:#b45309;}
+.badge-red{background:rgba(220,38,38,0.08);color:#b91c1c;}
+.badge-blue{background:rgba(37,99,235,0.08);color:#1d4ed8;}
+.badge-teal{background:rgba(13,148,136,0.1);color:#0f766e;}
+.badge-purple{background:rgba(124,58,237,0.08);color:#6d28d9;}
 .badge-muted{background:var(--bg4);color:var(--muted2);}
 
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:26px;width:500px;max-width:96vw;max-height:90vh;overflow-y:auto;}
-.modal-title{font-family:var(--serif);font-size:20px;margin-bottom:20px;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:26px;width:520px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.12);}
+.modal-title{font-family:var(--serif);font-size:20px;margin-bottom:20px;color:var(--text);}
 .form-group{margin-bottom:15px;}
-.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;letter-spacing:0.4px;}
-.form-input,.form-select,.form-textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;transition:border 0.15s;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);}
+.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;letter-spacing:0.4px;font-weight:500;}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;transition:border 0.15s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(22,163,74,0.1);}
 .form-select{cursor:pointer;}
 .form-textarea{resize:vertical;min-height:70px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -115,8 +120,8 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 /* TABS */
 .tabs{display:flex;gap:3px;background:var(--bg2);padding:4px;border-radius:10px;border:1px solid var(--border);width:fit-content;margin-bottom:20px;}
 .tab{padding:7px 16px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--muted2);transition:all 0.15s;}
-.tab.active{background:var(--bg4);color:var(--text);font-weight:500;}
-.tab:hover:not(.active){color:var(--text);}
+.tab.active{background:var(--accent);color:#fff;font-weight:500;}
+.tab:hover:not(.active){background:var(--bg3);color:var(--text);}
 
 /* SEARCH */
 .toolbar{display:flex;gap:10px;margin-bottom:18px;align-items:center;flex-wrap:wrap;}
@@ -124,47 +129,48 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 .search-input:focus{border-color:var(--accent);}
 .search-input::placeholder{color:var(--muted);}
 
-/* ENCARGOS */
-.encargos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
-.encargo-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;transition:border-color 0.15s;}
-.encargo-card:hover{border-color:var(--border2);}
+/* TRABAJOS */
+.encargos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.encargo-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all 0.15s;border-top:3px solid var(--accent);}
+.encargo-card:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(22,163,74,0.08);}
 .encargo-client{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:var(--mono);margin-bottom:3px;}
-.encargo-name{font-size:15px;font-weight:500;margin-bottom:10px;line-height:1.3;}
+.encargo-name{font-size:15px;font-weight:500;margin-bottom:10px;line-height:1.3;color:var(--text);}
 .encargo-stats{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
 .encargo-hours-val{font-size:24px;font-weight:600;font-family:var(--mono);color:var(--accent);}
 .encargo-budget-label{font-size:11px;color:var(--muted);}
 .encargo-actions{display:flex;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
 
+/* TIPO CARD COLORS */
+.encargo-card.tipo-aseguramiento{border-top-color:#2563eb;}
+.encargo-card.tipo-consultoria{border-top-color:#7c3aed;}
+.encargo-card.tipo-continua{border-top-color:#0d9488;}
+
 /* EMPTY STATE */
 .empty{padding:50px 20px;text-align:center;color:var(--muted);}
-.empty-icon{font-size:32px;margin-bottom:10px;opacity:0.4;}
+.empty-icon{font-size:32px;margin-bottom:10px;opacity:0.3;}
 .empty-text{font-size:13px;}
 
 /* TOAST */
-.toast{position:fixed;bottom:22px;right:22px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:11px 16px;font-size:13px;transform:translateY(70px);opacity:0;transition:all 0.25s;z-index:200;display:flex;align-items:center;gap:9px;max-width:300px;}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--sidebar);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 16px;font-size:13px;transform:translateY(70px);opacity:0;transition:all 0.25s;z-index:200;display:flex;align-items:center;gap:9px;max-width:300px;color:#fff;}
 .toast.show{transform:translateY(0);opacity:1;}
 
 /* REPORT */
 .report-filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
-.stat-row{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
-.stat-mini{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;flex:1;min-width:130px;}
-.stat-mini-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:var(--mono);}
-.stat-mini-val{font-size:22px;font-weight:600;margin-top:3px;font-family:var(--mono);}
 
 /* SELECTOR TIPO */
 .tipo-selector{display:flex;gap:10px;margin-bottom:18px;}
-.tipo-card{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.15s;text-align:center;}
+.tipo-card{flex:1;background:var(--bg2);border:2px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:all 0.15s;text-align:center;}
 .tipo-card:hover{border-color:var(--border2);}
-.tipo-card.selected{border-color:var(--accent);background:rgba(79,142,247,0.05);}
-.tipo-card-icon{font-size:22px;margin-bottom:6px;}
-.tipo-card-label{font-size:13px;font-weight:500;}
+.tipo-card.selected{border-color:var(--accent);background:rgba(22,163,74,0.04);}
+.tipo-card-icon{font-size:20px;margin-bottom:5px;}
+.tipo-card-label{font-size:13px;font-weight:500;color:var(--text);}
 .tipo-card-desc{font-size:11px;color:var(--muted);margin-top:2px;}
 
-/* Divider */
-.divider{height:1px;background:var(--border);margin:20px 0;}
-
-/* Color dot */
-.cdot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;}
+/* Supabase banner */
+.supabase-banner{background:linear-gradient(135deg,#0f2d1a,#166534);border-radius:12px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.supabase-banner-text{color:#e8f5ee;}
+.supabase-banner-title{font-size:14px;font-weight:600;margin-bottom:3px;}
+.supabase-banner-sub{font-size:12px;color:#6b9e7e;}
 </style>
 </head>
 <body>
@@ -173,31 +179,22 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">
-    <div class="logo-mark">Audit<span>Horas</span></div>
-    <div class="logo-sub">Control de tiempos</div>
+    <img class="logo-img" src="data:image/jpeg;base64,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" alt="Auditronic logo">
+    <div class="logo-text">
+      <div class="logo-mark">Audit<span>ronic</span></div>
+      <div class="logo-sub">Plataforma de gestión<br>de tiempo · Auditoría</div>
+    </div>
   </div>
   <nav class="nav">
     <div class="nav-section">Principal</div>
-    <div class="nav-item active" onclick="showView('dashboard')">
-      <span class="nav-icon">◈</span> Dashboard
-    </div>
-    <div class="nav-item" onclick="showView('registro')">
-      <span class="nav-icon">⊕</span> Registrar horas
-    </div>
+    <div class="nav-item active" onclick="showView('dashboard')"><span class="nav-icon">◈</span> Dashboard</div>
+    <div class="nav-item" onclick="showView('registro')"><span class="nav-icon">⊕</span> Registrar horas</div>
     <div class="nav-section">Gestión</div>
-    <div class="nav-item" onclick="showView('horas')">
-      <span class="nav-icon">◷</span> Mis registros
-    </div>
-    <div class="nav-item" onclick="showView('encargos')">
-      <span class="nav-icon">◉</span> Encargos
-    </div>
-    <div class="nav-item" onclick="showView('equipo')">
-      <span class="nav-icon">◎</span> Equipo
-    </div>
+    <div class="nav-item" onclick="showView('horas')"><span class="nav-icon">◷</span> Mis registros</div>
+    <div class="nav-item" onclick="showView('encargos')"><span class="nav-icon">◉</span> Trabajos</div>
+    <div class="nav-item" onclick="showView('equipo')"><span class="nav-icon">◎</span> Equipo</div>
     <div class="nav-section">Análisis</div>
-    <div class="nav-item" onclick="showView('reportes')">
-      <span class="nav-icon">▤</span> Reportes
-    </div>
+    <div class="nav-item" onclick="showView('reportes')"><span class="nav-icon">▤</span> Reportes</div>
   </nav>
   <div class="sidebar-footer">
     <div class="user-chip">
@@ -226,15 +223,15 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
   </div>
   <div class="content">
     <div class="kpi-grid">
-      <div class="kpi-card kpi-blue">
+      <div class="kpi-card kpi-green">
         <div class="kpi-label">Horas este mes</div>
         <div class="kpi-value" id="kpi-mes">0</div>
         <div class="kpi-delta" id="kpi-mes-delta">registros totales</div>
       </div>
-      <div class="kpi-card kpi-green">
-        <div class="kpi-label">Horas en encargos</div>
+      <div class="kpi-card kpi-emerald">
+        <div class="kpi-label">Horas en trabajos</div>
         <div class="kpi-value" id="kpi-encargos">0</div>
-        <div class="kpi-delta" id="kpi-encargos-delta">0 encargos activos</div>
+        <div class="kpi-delta" id="kpi-encargos-delta">0 trabajos activos</div>
       </div>
       <div class="kpi-card kpi-amber">
         <div class="kpi-label">Otras tareas</div>
@@ -247,9 +244,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
         <div class="kpi-delta" id="kpi-equipo-delta">auditores registrados</div>
       </div>
     </div>
-
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
-      <!-- Últimos registros -->
       <div class="table-card">
         <div class="table-header">
           <div class="table-title">Últimos registros</div>
@@ -261,25 +256,20 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
         </table>
         <div class="empty" id="dash-recent-empty" style="padding:30px;"><div class="empty-text">Sin registros aún</div></div>
       </div>
-      <!-- Resumen encargos -->
       <div class="table-card">
         <div class="table-header">
-          <div class="table-title">Estado de encargos</div>
+          <div class="table-title">Estado de trabajos</div>
           <a onclick="showView('encargos')" style="font-size:12px;color:var(--accent);cursor:pointer;">Gestionar →</a>
         </div>
         <table>
-          <thead><tr><th>Encargo</th><th>Ejecutado</th><th>Progreso</th></tr></thead>
+          <thead><tr><th>Trabajo</th><th>Ejecutado</th><th>Progreso</th></tr></thead>
           <tbody id="dash-encargos"></tbody>
         </table>
-        <div class="empty" id="dash-encargos-empty" style="padding:30px;"><div class="empty-text">Sin encargos creados</div></div>
+        <div class="empty" id="dash-encargos-empty" style="padding:30px;"><div class="empty-text">Sin trabajos creados</div></div>
       </div>
     </div>
-
-    <!-- Tareas generales resumen -->
     <div class="table-card" style="margin-top:18px;">
-      <div class="table-header">
-        <div class="table-title">Horas por tipo de tarea (este mes)</div>
-      </div>
+      <div class="table-header"><div class="table-title">Horas por tipo de tarea (este mes)</div></div>
       <table>
         <thead><tr><th>Tarea</th><th>Sub-tarea</th><th>Horas</th><th>% del total</th></tr></thead>
         <tbody id="dash-tareas"></tbody>
@@ -292,18 +282,15 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 <!-- ===== REGISTRAR HORAS ===== -->
 <div class="view" id="view-registro">
   <div class="page-header">
-    <div>
-      <div class="page-title">Registrar horas</div>
-      <div class="page-sub">Añade un nuevo registro de tiempo</div>
-    </div>
+    <div><div class="page-title">Registrar horas</div><div class="page-sub">Añade un nuevo registro de tiempo</div></div>
   </div>
   <div class="content">
     <div style="max-width:600px;">
       <div class="tipo-selector">
         <div class="tipo-card selected" id="tipo-encargo-card" onclick="selectTipo('encargo')">
           <div class="tipo-card-icon">◉</div>
-          <div class="tipo-card-label">Encargo de auditoría</div>
-          <div class="tipo-card-desc">Trabajo para un cliente específico</div>
+          <div class="tipo-card-label">Trabajo de auditoría</div>
+          <div class="tipo-card-desc">Trabajo para una sociedad específica</div>
         </div>
         <div class="tipo-card" id="tipo-tarea-card" onclick="selectTipo('tarea')">
           <div class="tipo-card-icon">◈</div>
@@ -311,8 +298,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
           <div class="tipo-card-desc">Colaboración, formación, ausencias…</div>
         </div>
       </div>
-
-      <div class="table-card" style="padding:24px;overflow:visible;">
+      <div class="table-card" style="padding:24px;overflow:visible;border:1px solid var(--border);">
         <div class="form-row" style="margin-bottom:15px;">
           <div class="form-group" style="margin:0;">
             <label class="form-label">Fecha *</label>
@@ -320,19 +306,13 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
           </div>
           <div class="form-group" style="margin:0;">
             <label class="form-label">Auditor *</label>
-            <select class="form-select" id="reg-auditor">
-              <option value="">— seleccionar —</option>
-            </select>
+            <select class="form-select" id="reg-auditor"><option value="">— seleccionar —</option></select>
           </div>
         </div>
-
-        <!-- Campos encargo -->
         <div id="campos-encargo">
           <div class="form-group">
-            <label class="form-label">Encargo *</label>
-            <select class="form-select" id="reg-encargo">
-              <option value="">— seleccionar encargo —</option>
-            </select>
+            <label class="form-label">Trabajo de auditoría *</label>
+            <select class="form-select" id="reg-encargo"><option value="">— seleccionar trabajo —</option></select>
           </div>
           <div class="form-group">
             <label class="form-label">Fase</label>
@@ -341,12 +321,9 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
               <option value="Trabajo de campo">Trabajo de campo</option>
               <option value="Revisión">Revisión</option>
               <option value="Informe">Informe</option>
-              <option value="Seguimiento">Seguimiento</option>
             </select>
           </div>
         </div>
-
-        <!-- Campos tarea general -->
         <div id="campos-tarea" style="display:none;">
           <div class="form-row" style="margin-bottom:15px;">
             <div class="form-group" style="margin:0;">
@@ -364,13 +341,10 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
             </div>
             <div class="form-group" style="margin:0;">
               <label class="form-label">Sub-tarea</label>
-              <select class="form-select" id="reg-subtarea">
-                <option value="--">—</option>
-              </select>
+              <select class="form-select" id="reg-subtarea"><option value="--">—</option></select>
             </div>
           </div>
         </div>
-
         <div class="form-row" style="margin-bottom:15px;">
           <div class="form-group" style="margin:0;">
             <label class="form-label">Horas *</label>
@@ -382,12 +356,10 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
             <input type="time" class="form-input" id="reg-inicio">
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label">Descripción / Notas</label>
           <textarea class="form-textarea" id="reg-notas" placeholder="Detalle del trabajo realizado…"></textarea>
         </div>
-
         <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px;">
           <button class="btn btn-ghost" onclick="limpiarFormRegistro()">Limpiar</button>
           <button class="btn btn-primary" onclick="guardarRegistro()">✓ Guardar registro</button>
@@ -400,10 +372,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 <!-- ===== MIS REGISTROS ===== -->
 <div class="view" id="view-horas">
   <div class="page-header">
-    <div>
-      <div class="page-title">Registros de horas</div>
-      <div class="page-sub">Historial completo de tiempo registrado</div>
-    </div>
+    <div><div class="page-title">Registros de horas</div><div class="page-sub">Historial completo de tiempo registrado</div></div>
     <div class="header-actions">
       <button class="btn btn-ghost btn-sm" onclick="exportarCSV()">↓ Exportar CSV</button>
       <button class="btn btn-primary" onclick="showView('registro')">⊕ Nuevo registro</button>
@@ -414,7 +383,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
       <input type="text" class="search-input" id="horas-search" placeholder="Buscar…" oninput="renderHoras()">
       <select class="form-select" style="width:160px;" id="horas-filtro-tipo" onchange="renderHoras()">
         <option value="">Todos los tipos</option>
-        <option value="encargo">Encargos</option>
+        <option value="encargo">Trabajos</option>
         <option value="tarea">Tareas generales</option>
       </select>
       <select class="form-select" style="width:160px;" id="horas-filtro-auditor" onchange="renderHoras()">
@@ -428,18 +397,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
         <div class="table-sub" id="horas-count">0 registros</div>
       </div>
       <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Auditor</th>
-            <th>Tipo</th>
-            <th>Tarea / Encargo</th>
-            <th>Sub-tarea / Fase</th>
-            <th>Horas</th>
-            <th>Notas</th>
-            <th></th>
-          </tr>
-        </thead>
+        <thead><tr><th>Fecha</th><th>Auditor</th><th>Tipo</th><th>Trabajo / Tarea</th><th>Sub-tarea / Fase</th><th>Horas</th><th>Notas</th><th></th></tr></thead>
         <tbody id="horas-tbody"></tbody>
       </table>
       <div class="empty" id="horas-empty"><div class="empty-icon">◷</div><div class="empty-text">No hay registros que mostrar</div></div>
@@ -447,20 +405,23 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
   </div>
 </div>
 
-<!-- ===== ENCARGOS ===== -->
+<!-- ===== TRABAJOS ===== -->
 <div class="view" id="view-encargos">
   <div class="page-header">
-    <div>
-      <div class="page-title">Encargos</div>
-      <div class="page-sub">Trabajos de auditoría y sus presupuestos</div>
-    </div>
+    <div><div class="page-title">Trabajos de auditoría</div><div class="page-sub">Gestión de trabajos y presupuesto de horas</div></div>
     <div class="header-actions">
-      <button class="btn btn-primary" onclick="abrirModalEncargo()">⊕ Nuevo encargo</button>
+      <button class="btn btn-primary" onclick="abrirModalEncargo()">⊕ Nuevo trabajo</button>
     </div>
   </div>
   <div class="content">
     <div class="toolbar">
-      <input type="text" class="search-input" id="encargos-search" placeholder="Buscar cliente o encargo…" oninput="renderEncargos()">
+      <input type="text" class="search-input" id="encargos-search" placeholder="Buscar sociedad o trabajo…" oninput="renderEncargos()">
+      <select class="form-select" style="width:160px;" id="encargos-filtro-tipo" onchange="renderEncargos()">
+        <option value="">Todos los tipos</option>
+        <option value="Aseguramiento">Aseguramiento</option>
+        <option value="Consultoría">Consultoría</option>
+        <option value="Auditoría Continua">Auditoría Continua</option>
+      </select>
       <select class="form-select" style="width:160px;" id="encargos-filtro-estado" onchange="renderEncargos()">
         <option value="">Todos los estados</option>
         <option value="Activo">Activo</option>
@@ -469,17 +430,14 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
       </select>
     </div>
     <div class="encargos-grid" id="encargos-grid"></div>
-    <div class="empty" id="encargos-empty"><div class="empty-icon">◉</div><div class="empty-text">No hay encargos creados. ¡Crea el primero!</div></div>
+    <div class="empty" id="encargos-empty"><div class="empty-icon">◉</div><div class="empty-text">No hay trabajos creados. ¡Crea el primero!</div></div>
   </div>
 </div>
 
 <!-- ===== EQUIPO ===== -->
 <div class="view" id="view-equipo">
   <div class="page-header">
-    <div>
-      <div class="page-title">Equipo auditor</div>
-      <div class="page-sub">Miembros y sus horas acumuladas</div>
-    </div>
+    <div><div class="page-title">Equipo auditor</div><div class="page-sub">Miembros y sus horas acumuladas</div></div>
     <div class="header-actions">
       <button class="btn btn-primary" onclick="abrirModalAuditor()">⊕ Añadir auditor</button>
     </div>
@@ -487,7 +445,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
   <div class="content">
     <div class="table-card">
       <table>
-        <thead><tr><th>Nombre</th><th>Rol</th><th>Horas este mes</th><th>Horas totales</th><th>Encargos activos</th><th></th></tr></thead>
+        <thead><tr><th>Nombre</th><th>Rol</th><th>Horas este mes</th><th>Horas totales</th><th>Trabajos activos</th><th></th></tr></thead>
         <tbody id="equipo-tbody"></tbody>
       </table>
       <div class="empty" id="equipo-empty"><div class="empty-icon">◎</div><div class="empty-text">No hay auditores registrados</div></div>
@@ -498,48 +456,41 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 <!-- ===== REPORTES ===== -->
 <div class="view" id="view-reportes">
   <div class="page-header">
-    <div>
-      <div class="page-title">Reportes</div>
-      <div class="page-sub">Análisis y resúmenes de tiempo</div>
-    </div>
+    <div><div class="page-title">Reportes</div><div class="page-sub">Análisis y resúmenes de tiempo</div></div>
     <div class="header-actions">
       <button class="btn btn-ghost btn-sm" onclick="exportarCSV()">↓ Exportar CSV</button>
     </div>
   </div>
   <div class="content">
     <div class="tabs">
-      <div class="tab active" onclick="switchReporte('encargos', this)">Por encargo</div>
-      <div class="tab" onclick="switchReporte('auditores', this)">Por auditor</div>
-      <div class="tab" onclick="switchReporte('tareas', this)">Por tipo de tarea</div>
+      <div class="tab active" onclick="switchReporte('encargos',this)">Por trabajo</div>
+      <div class="tab" onclick="switchReporte('auditores',this)">Por auditor</div>
+      <div class="tab" onclick="switchReporte('tareas',this)">Por tipo de tarea</div>
     </div>
-
     <div class="report-filters">
       <input type="month" class="form-input" style="width:180px;" id="rep-mes">
       <button class="btn btn-ghost btn-sm" onclick="renderReporteActual()">Aplicar</button>
     </div>
-
     <div id="rep-encargos">
       <div class="table-card">
-        <div class="table-header"><div class="table-title">Horas por encargo</div></div>
+        <div class="table-header"><div class="table-title">Horas por trabajo</div></div>
         <table>
-          <thead><tr><th>Cliente</th><th>Encargo</th><th>Presupuesto (h)</th><th>Ejecutado (h)</th><th>Restante (h)</th><th>% Avance</th><th>Estado</th></tr></thead>
+          <thead><tr><th>Sociedad</th><th>Trabajo</th><th>Tipo</th><th>Código</th><th>Ppto (h)</th><th>Ejecutado (h)</th><th>Restante (h)</th><th>% Avance</th><th>Estado</th></tr></thead>
           <tbody id="rep-enc-tbody"></tbody>
         </table>
         <div class="empty" id="rep-enc-empty"><div class="empty-text">Sin datos para este período</div></div>
       </div>
     </div>
-
     <div id="rep-auditores" style="display:none;">
       <div class="table-card">
         <div class="table-header"><div class="table-title">Horas por auditor</div></div>
         <table>
-          <thead><tr><th>Auditor</th><th>Rol</th><th>Encargos (h)</th><th>Tareas generales (h)</th><th>Total (h)</th><th>Registros</th></tr></thead>
+          <thead><tr><th>Auditor</th><th>Rol</th><th>Trabajos (h)</th><th>Tareas generales (h)</th><th>Total (h)</th><th>Registros</th></tr></thead>
           <tbody id="rep-aud-tbody"></tbody>
         </table>
         <div class="empty" id="rep-aud-empty"><div class="empty-text">Sin datos para este período</div></div>
       </div>
     </div>
-
     <div id="rep-tareas" style="display:none;">
       <div class="table-card">
         <div class="table-header"><div class="table-title">Horas por tipo de tarea general</div></div>
@@ -556,22 +507,32 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- ===== MODAL ENCARGO ===== -->
+<!-- ===== MODAL TRABAJO ===== -->
 <div class="modal-overlay" id="modal-encargo">
   <div class="modal">
-    <div class="modal-title" id="modal-enc-title">Nuevo encargo</div>
-    <div class="form-group">
-      <label class="form-label">Cliente *</label>
-      <input type="text" class="form-input" id="enc-cliente" placeholder="Nombre del cliente">
+    <div class="modal-title" id="modal-enc-title">Nuevo trabajo de auditoría</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Sociedad *</label>
+        <input type="text" class="form-input" id="enc-cliente" placeholder="Nombre de la sociedad">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Código de auditoría</label>
+        <input type="text" class="form-input" id="enc-codigo" placeholder="Ej: AUD-2025-001">
+      </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Nombre del encargo *</label>
-      <input type="text" class="form-input" id="enc-nombre" placeholder="Ej: Auditoría financiera 2024">
+      <label class="form-label">Nombre del trabajo *</label>
+      <input type="text" class="form-input" id="enc-nombre" placeholder="Ej: Auditoría financiera 2025">
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Presupuesto de horas</label>
-        <input type="number" class="form-input" id="enc-presupuesto" min="0" step="0.5" placeholder="0">
+        <label class="form-label">Tipo de trabajo *</label>
+        <select class="form-select" id="enc-tipo">
+          <option value="Aseguramiento">Aseguramiento</option>
+          <option value="Consultoría">Consultoría</option>
+          <option value="Auditoría Continua">Auditoría Continua</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">Estado</label>
@@ -580,6 +541,16 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
           <option value="Pendiente">Pendiente</option>
           <option value="Finalizado">Finalizado</option>
         </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Presupuesto de horas</label>
+        <input type="number" class="form-input" id="enc-presupuesto" min="0" step="0.5" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label"> </label>
+        <div style="padding-top:4px;font-size:11px;color:var(--muted);">Deja en 0 si no aplica presupuesto</div>
       </div>
     </div>
     <div class="form-row">
@@ -598,7 +569,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="cerrarModal('modal-encargo')">Cancelar</button>
-      <button class="btn btn-primary" onclick="guardarEncargo()">Guardar encargo</button>
+      <button class="btn btn-primary" onclick="guardarEncargo()">Guardar trabajo</button>
     </div>
   </div>
 </div>
@@ -621,7 +592,7 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
       <div class="form-group">
         <label class="form-label">Rol *</label>
         <select class="form-select" id="aud-rol">
-          <option value="Socio">Socio</option>
+          <option value="Director de Auditoría">Director de Auditoría</option>
           <option value="Gerente">Gerente</option>
           <option value="Senior">Senior</option>
           <option value="Asistente">Asistente</option>
@@ -644,7 +615,48 @@ tbody td{padding:11px 16px;font-size:13px;vertical-align:middle;}
 <div class="toast" id="toast"><span id="toast-icon">✓</span><span id="toast-msg">Guardado</span></div>
 
 <script>
-// ========== DATA ==========
+// ========== SUPABASE CONFIG ==========
+// INSTRUCCIONES: Reemplaza estos dos valores con los de tu proyecto Supabase
+// Settings → API → Project URL y anon public key
+const SUPABASE_URL = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrdHVjYmliZ2VieHhocmloYXpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzNTMzMjQsImV4cCI6MjA4ODkyOTMyNH0.-GPhVPoawI8VM0JF1ZRsL28GwOuRWoV8R9vynDj3qiM';
+const SUPABASE_KEY = 'sb_publishable_yBJr92FXgKjnJL3T-wNeDg_udzqsVjJ';
+
+const SB = {
+  async get(tabla) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    return r.ok ? r.json() : [];
+  },
+  async insert(tabla, data) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${tabla}`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+      body: JSON.stringify(data)
+    });
+    return r.ok ? r.json() : null;
+  },
+  async update(tabla, id, data) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+      body: JSON.stringify(data)
+    });
+    return r.ok ? r.json() : null;
+  },
+  async delete(tabla, id) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    return r.ok;
+  }
+};
+
+// Detectar si Supabase está configurado
+const SB_LISTO = SUPABASE_URL !== 'PEGA_AQUI_TU_PROJECT_URL';
+
+// ========== DATA (localStorage como fallback) ==========
 const SUBTAREAS = {
   'COLABORACIÓN': ['Auditoría externa','Interdepartamental','Organismos externos'],
   'FORMACIÓN': ['Interna','Externa'],
@@ -655,17 +667,33 @@ const SUBTAREAS = {
   'FESTIVOS Y VACACIONES': ['--']
 };
 
-let db = {
-  auditores: JSON.parse(localStorage.getItem('ah_auditores') || '[]'),
-  encargos:  JSON.parse(localStorage.getItem('ah_encargos')  || '[]'),
-  registros: JSON.parse(localStorage.getItem('ah_registros') || '[]'),
-};
+let db = { auditores: [], encargos: [], registros: [] };
 let editEncId = null, editAudId = null;
-let currentTipo = 'encargo';
-let currentReporte = 'encargos';
+let currentTipo = 'encargo', currentReporte = 'encargos';
 
-function save(key) { localStorage.setItem('ah_'+key, JSON.stringify(db[key])); }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function saveLocal(key) { localStorage.setItem('at_'+key, JSON.stringify(db[key])); }
+
+async function cargarDatos() {
+  if(SB_LISTO) {
+    showToast('Cargando datos…','⟳');
+    try {
+      const [auditores, encargos, registros] = await Promise.all([
+        SB.get('auditores'), SB.get('encargos'), SB.get('registros')
+      ]);
+      db.auditores = auditores||[];
+      db.encargos = encargos||[];
+      db.registros = registros||[];
+      showToast('Datos cargados','✓');
+    } catch(e) {
+      showToast('Error al cargar datos','⚠');
+    }
+  } else {
+    db.auditores = JSON.parse(localStorage.getItem('at_auditores')||'[]');
+    db.encargos  = JSON.parse(localStorage.getItem('at_encargos') ||'[]');
+    db.registros = JSON.parse(localStorage.getItem('at_registros')||'[]');
+  }
+}
 
 // ========== NAVIGATION ==========
 function showView(name) {
@@ -685,77 +713,72 @@ function showView(name) {
 
 // ========== TIPO SELECTOR ==========
 function selectTipo(tipo) {
-  currentTipo = tipo;
-  document.getElementById('tipo-encargo-card').classList.toggle('selected', tipo==='encargo');
-  document.getElementById('tipo-tarea-card').classList.toggle('selected', tipo==='tarea');
-  document.getElementById('campos-encargo').style.display = tipo==='encargo'?'':'none';
-  document.getElementById('campos-tarea').style.display = tipo==='tarea'?'':'none';
+  currentTipo=tipo;
+  document.getElementById('tipo-encargo-card').classList.toggle('selected',tipo==='encargo');
+  document.getElementById('tipo-tarea-card').classList.toggle('selected',tipo==='tarea');
+  document.getElementById('campos-encargo').style.display=tipo==='encargo'?'':'none';
+  document.getElementById('campos-tarea').style.display=tipo==='tarea'?'':'none';
 }
 
 function updateSubtareas() {
-  const tarea = document.getElementById('reg-tarea').value;
-  const sel = document.getElementById('reg-subtarea');
-  sel.innerHTML = '';
-  (SUBTAREAS[tarea]||['--']).forEach(s=>{
-    const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o);
-  });
+  const tarea=document.getElementById('reg-tarea').value;
+  const sel=document.getElementById('reg-subtarea');
+  sel.innerHTML='';
+  (SUBTAREAS[tarea]||['--']).forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
 }
 
 // ========== INIT REGISTRO ==========
 function initRegistro() {
-  const fi = document.getElementById('reg-fecha');
-  if(!fi.value) fi.value = new Date().toISOString().split('T')[0];
+  const fi=document.getElementById('reg-fecha');
+  if(!fi.value) fi.value=new Date().toISOString().split('T')[0];
   updateAuditorSelect('reg-auditor');
   updateEncargoSelect();
 }
 
 function updateAuditorSelect(id) {
-  const sel = document.getElementById(id);
-  const prev = sel.value;
-  sel.innerHTML = '<option value="">— seleccionar —</option>';
-  db.auditores.forEach(a=>{
-    const o=document.createElement('option'); o.value=a.id; o.textContent=a.nombre+' ('+a.rol+')'; sel.appendChild(o);
-  });
+  const sel=document.getElementById(id);
+  const prev=sel.value;
+  sel.innerHTML='<option value="">— seleccionar —</option>';
+  db.auditores.forEach(a=>{ const o=document.createElement('option'); o.value=a.id; o.textContent=a.nombre+' ('+a.rol+')'; sel.appendChild(o); });
   if(prev) sel.value=prev;
 }
 
 function updateEncargoSelect() {
-  const sel = document.getElementById('reg-encargo');
-  const prev = sel.value;
-  sel.innerHTML = '<option value="">— seleccionar encargo —</option>';
-  db.encargos.filter(e=>e.estado==='Activo').forEach(e=>{
-    const o=document.createElement('option'); o.value=e.id; o.textContent=e.cliente+' — '+e.nombre; sel.appendChild(o);
-  });
+  const sel=document.getElementById('reg-encargo');
+  const prev=sel.value;
+  sel.innerHTML='<option value="">— seleccionar trabajo —</option>';
+  db.encargos.filter(e=>e.estado==='Activo').forEach(e=>{ const o=document.createElement('option'); o.value=e.id; o.textContent=e.cliente+' — '+e.nombre; sel.appendChild(o); });
   if(prev) sel.value=prev;
 }
 
 // ========== GUARDAR REGISTRO ==========
-function guardarRegistro() {
-  const fecha = document.getElementById('reg-fecha').value;
-  const auditorId = document.getElementById('reg-auditor').value;
-  const horas = parseFloat(document.getElementById('reg-horas').value);
-  const notas = document.getElementById('reg-notas').value.trim();
-  const inicio = document.getElementById('reg-inicio').value;
-
-  if(!fecha||!auditorId||!horas||horas<=0) { showToast('Completa los campos obligatorios','⚠'); return; }
-
-  const reg = { id:uid(), fecha, auditorId, tipo:currentTipo, horas, notas, inicio };
-
-  if(currentTipo==='encargo') {
-    const encargoId = document.getElementById('reg-encargo').value;
-    const fase = document.getElementById('reg-fase').value;
-    if(!encargoId) { showToast('Selecciona un encargo','⚠'); return; }
-    reg.encargoId = encargoId;
-    reg.fase = fase;
+async function guardarRegistro() {
+  const fecha=document.getElementById('reg-fecha').value;
+  const auditorId=document.getElementById('reg-auditor').value;
+  const horas=parseFloat(document.getElementById('reg-horas').value);
+  const notas=document.getElementById('reg-notas').value.trim();
+  const inicio=document.getElementById('reg-inicio').value;
+  if(!fecha||!auditorId||!horas||horas<=0){showToast('Completa los campos obligatorios','⚠');return;}
+  const reg={id:uid(),fecha,auditor_id:auditorId,tipo:currentTipo,horas,notas,inicio};
+  if(currentTipo==='encargo'){
+    const encargoId=document.getElementById('reg-encargo').value;
+    if(!encargoId){showToast('Selecciona un trabajo','⚠');return;}
+    reg.encargo_id=encargoId;
+    reg.fase=document.getElementById('reg-fase').value;
   } else {
-    const tarea = document.getElementById('reg-tarea').value;
-    if(!tarea) { showToast('Selecciona una tarea','⚠'); return; }
-    reg.tarea = tarea;
-    reg.subtarea = document.getElementById('reg-subtarea').value;
+    const tarea=document.getElementById('reg-tarea').value;
+    if(!tarea){showToast('Selecciona una tarea','⚠');return;}
+    reg.tarea=tarea;
+    reg.subtarea=document.getElementById('reg-subtarea').value;
   }
-
-  db.registros.push(reg);
-  save('registros');
+  if(SB_LISTO) {
+    const saved=await SB.insert('registros',reg);
+    if(!saved){showToast('Error al guardar','⚠');return;}
+    db.registros.unshift(reg);
+  } else {
+    db.registros.unshift(reg);
+    saveLocal('registros');
+  }
   limpiarFormRegistro();
   showToast('Registro guardado correctamente','✓');
 }
@@ -771,124 +794,82 @@ function limpiarFormRegistro() {
 
 // ========== DASHBOARD ==========
 function renderDashboard() {
-  const now = new Date();
-  document.getElementById('dash-date').textContent = now.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const mesActual = now.toISOString().slice(0,7);
+  const now=new Date();
+  document.getElementById('dash-date').textContent=now.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const mes=now.toISOString().slice(0,7);
+  const regMes=db.registros.filter(r=>r.fecha&&r.fecha.startsWith(mes));
+  const totalH=regMes.reduce((s,r)=>s+r.horas,0);
+  const hEnc=regMes.filter(r=>r.tipo==='encargo').reduce((s,r)=>s+r.horas,0);
+  const hOtra=regMes.filter(r=>r.tipo==='tarea').reduce((s,r)=>s+r.horas,0);
+  const activos=db.encargos.filter(e=>e.estado==='Activo').length;
+  document.getElementById('kpi-mes').textContent=totalH.toFixed(1);
+  document.getElementById('kpi-mes-delta').textContent=db.registros.length+' registros totales';
+  document.getElementById('kpi-encargos').textContent=hEnc.toFixed(1);
+  document.getElementById('kpi-encargos-delta').textContent=activos+' trabajos activos';
+  document.getElementById('kpi-otras').textContent=hOtra.toFixed(1);
+  document.getElementById('kpi-equipo').textContent=db.auditores.length;
 
-  const regMes = db.registros.filter(r=>r.fecha&&r.fecha.startsWith(mesActual));
-  const totalHorasMes = regMes.reduce((s,r)=>s+r.horas,0);
-  const horasEncargos = regMes.filter(r=>r.tipo==='encargo').reduce((s,r)=>s+r.horas,0);
-  const horasOtras = regMes.filter(r=>r.tipo==='tarea').reduce((s,r)=>s+r.horas,0);
-  const encActivos = db.encargos.filter(e=>e.estado==='Activo').length;
-
-  document.getElementById('kpi-mes').textContent = totalHorasMes.toFixed(1);
-  document.getElementById('kpi-mes-delta').textContent = db.registros.length + ' registros totales';
-  document.getElementById('kpi-encargos').textContent = horasEncargos.toFixed(1);
-  document.getElementById('kpi-encargos-delta').textContent = encActivos + ' encargos activos';
-  document.getElementById('kpi-otras').textContent = horasOtras.toFixed(1);
-  document.getElementById('kpi-equipo').textContent = db.auditores.length;
-
-  // Recent
-  const recent = [...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,6);
-  const tbody = document.getElementById('dash-recent');
-  const empty = document.getElementById('dash-recent-empty');
+  const recent=[...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,6);
+  const tbody=document.getElementById('dash-recent');
+  document.getElementById('dash-recent-empty').style.display=recent.length?'none':'block';
   tbody.innerHTML='';
-  empty.style.display = recent.length?'none':'block';
   recent.forEach(r=>{
-    const aud = db.auditores.find(a=>a.id===r.auditorId);
-    const desc = r.tipo==='encargo'
-      ? (db.encargos.find(e=>e.id===r.encargoId)||{nombre:'?'}).nombre + (r.fase?' · '+r.fase:'')
-      : r.tarea + (r.subtarea&&r.subtarea!=='--'?' · '+r.subtarea:'');
-    tbody.innerHTML+=`<tr>
-      <td style="font-family:var(--mono);font-size:12px;">${r.fecha}</td>
-      <td>${aud?aud.nombre:'?'}</td>
-      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${desc}</td>
-      <td style="font-family:var(--mono);font-weight:500;">${r.horas.toFixed(1)}h</td>
-    </tr>`;
+    const aud=db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId));
+    const desc=r.tipo==='encargo'?(db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:'?'}).nombre+(r.fase?' · '+r.fase:''):r.tarea+(r.subtarea&&r.subtarea!=='--'?' · '+r.subtarea:'');
+    tbody.innerHTML+=`<tr><td style="font-family:var(--mono);font-size:12px;">${r.fecha}</td><td>${aud?aud.nombre:'?'}</td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${desc}</td><td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${r.horas.toFixed(1)}h</td></tr>`;
   });
 
-  // Encargos
-  const etbody = document.getElementById('dash-encargos');
-  const eempty = document.getElementById('dash-encargos-empty');
+  const etbody=document.getElementById('dash-encargos');
+  const activosEnc=db.encargos.filter(e=>e.estado==='Activo');
+  document.getElementById('dash-encargos-empty').style.display=activosEnc.length?'none':'block';
   etbody.innerHTML='';
-  const activos = db.encargos.filter(e=>e.estado==='Activo');
-  eempty.style.display = activos.length?'none':'block';
-  activos.slice(0,5).forEach(e=>{
-    const exec = db.registros.filter(r=>r.encargoId===e.id).reduce((s,r)=>s+r.horas,0);
-    const pct = e.presupuesto>0 ? Math.min(100,Math.round(exec/e.presupuesto*100)) : 0;
-    const color = pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    etbody.innerHTML+=`<tr>
-      <td>${e.nombre}<br><span style="font-size:11px;color:var(--muted);">${e.cliente}</span></td>
-      <td style="font-family:var(--mono);">${exec.toFixed(1)}h${e.presupuesto>0?' / '+e.presupuesto+'h':''}</td>
-      <td>
-        <div class="prog-wrap">
-          <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div>
-          <span class="prog-pct">${pct}%</span>
-        </div>
-      </td>
-    </tr>`;
+  activosEnc.slice(0,5).forEach(e=>{
+    const exec=db.registros.filter(r=>(r.encargo_id||r.encargoId)===e.id).reduce((s,r)=>s+r.horas,0);
+    const pct=e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
+    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
+    etbody.innerHTML+=`<tr><td>${e.nombre}<br><span style="font-size:11px;color:var(--muted);">${e.cliente}</span></td><td style="font-family:var(--mono);">${exec.toFixed(1)}h${e.presupuesto>0?' / '+e.presupuesto+'h':''}</td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div></td></tr>`;
   });
 
-  // Tareas generales mes
-  const ttbody = document.getElementById('dash-tareas');
-  const tempty = document.getElementById('dash-tareas-empty');
-  const tareasRegs = regMes.filter(r=>r.tipo==='tarea');
+  const tareasRegs=regMes.filter(r=>r.tipo==='tarea');
+  const ttbody=document.getElementById('dash-tareas');
+  document.getElementById('dash-tareas-empty').style.display=tareasRegs.length?'none':'block';
   ttbody.innerHTML='';
-  tempty.style.display = tareasRegs.length?'none':'block';
-  const totalTareas = tareasRegs.reduce((s,r)=>s+r.horas,0);
-  const grouped = {};
-  tareasRegs.forEach(r=>{
-    const k = r.tarea+'|||'+(r.subtarea||'--');
-    if(!grouped[k]) grouped[k]={tarea:r.tarea,subtarea:r.subtarea||'--',horas:0};
-    grouped[k].horas+=r.horas;
-  });
+  const totalT=tareasRegs.reduce((s,r)=>s+r.horas,0);
+  const grouped={};
+  tareasRegs.forEach(r=>{const k=r.tarea+'|||'+(r.subtarea||'--');if(!grouped[k])grouped[k]={tarea:r.tarea,subtarea:r.subtarea||'--',horas:0};grouped[k].horas+=r.horas;});
   Object.values(grouped).sort((a,b)=>b.horas-a.horas).forEach(g=>{
-    const pct = totalTareas>0?Math.round(g.horas/totalTareas*100):0;
-    ttbody.innerHTML+=`<tr>
-      <td style="font-weight:500;">${g.tarea}</td>
-      <td style="color:var(--muted);font-size:12px;">${g.subtarea==='--'?'—':g.subtarea}</td>
-      <td style="font-family:var(--mono);">${g.horas.toFixed(1)}h</td>
-      <td>
-        <div class="prog-wrap">
-          <div class="prog-bar" style="min-width:60px;"><div class="prog-fill" style="width:${pct}%;background:var(--teal);"></div></div>
-          <span class="prog-pct">${pct}%</span>
-        </div>
-      </td>
-    </tr>`;
+    const pct=totalT>0?Math.round(g.horas/totalT*100):0;
+    ttbody.innerHTML+=`<tr><td style="font-weight:500;">${g.tarea}</td><td style="color:var(--muted);font-size:12px;">${g.subtarea==='--'?'—':g.subtarea}</td><td style="font-family:var(--mono);">${g.horas.toFixed(1)}h</td><td><div class="prog-wrap"><div class="prog-bar" style="min-width:60px;"><div class="prog-fill" style="width:${pct}%;background:var(--teal);"></div></div><span class="prog-pct">${pct}%</span></div></td></tr>`;
   });
 }
 
 // ========== HORAS ==========
 function renderHoras() {
-  const search = document.getElementById('horas-search').value.toLowerCase();
-  const filtroTipo = document.getElementById('horas-filtro-tipo').value;
-  const filtroAud = document.getElementById('horas-filtro-auditor').value;
-  const filtroMes = document.getElementById('horas-filtro-mes').value;
+  const search=document.getElementById('horas-search').value.toLowerCase();
+  const filtroTipo=document.getElementById('horas-filtro-tipo').value;
+  const filtroAud=document.getElementById('horas-filtro-auditor').value;
+  const filtroMes=document.getElementById('horas-filtro-mes').value;
   updateAuditorSelect('horas-filtro-auditor');
   if(filtroAud) document.getElementById('horas-filtro-auditor').value=filtroAud;
-
-  let regs = [...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  let regs=[...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha));
   if(filtroTipo) regs=regs.filter(r=>r.tipo===filtroTipo);
-  if(filtroAud) regs=regs.filter(r=>r.auditorId===filtroAud);
+  if(filtroAud) regs=regs.filter(r=>(r.auditor_id||r.auditorId)===filtroAud);
   if(filtroMes) regs=regs.filter(r=>r.fecha&&r.fecha.startsWith(filtroMes));
   if(search) regs=regs.filter(r=>{
-    const aud=(db.auditores.find(a=>a.id===r.auditorId)||{nombre:''}).nombre.toLowerCase();
-    const enc=(db.encargos.find(e=>e.id===r.encargoId)||{nombre:''}).nombre.toLowerCase();
+    const aud=(db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId))||{nombre:''}).nombre.toLowerCase();
+    const enc=(db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:''}).nombre.toLowerCase();
     return aud.includes(search)||enc.includes(search)||(r.tarea||'').toLowerCase().includes(search)||(r.notas||'').toLowerCase().includes(search);
   });
-
-  const tbody = document.getElementById('horas-tbody');
-  const empty = document.getElementById('horas-empty');
+  const tbody=document.getElementById('horas-tbody');
+  document.getElementById('horas-empty').style.display=regs.length?'none':'block';
+  document.getElementById('horas-count').textContent=regs.length+' registros';
   tbody.innerHTML='';
-  empty.style.display = regs.length?'none':'block';
-  document.getElementById('horas-count').textContent = regs.length+' registros';
-
   regs.forEach(r=>{
-    const aud = db.auditores.find(a=>a.id===r.auditorId)||{nombre:'?'};
-    let tipoHtml='', tareaHtml='', subHtml='';
+    const aud=db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId))||{nombre:'?'};
+    let tipoHtml='',tareaHtml='',subHtml='';
     if(r.tipo==='encargo'){
-      tipoHtml='<span class="badge badge-blue">Encargo</span>';
-      const enc=db.encargos.find(e=>e.id===r.encargoId)||{nombre:'?',cliente:''};
+      tipoHtml='<span class="badge badge-green">Trabajo</span>';
+      const enc=db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:'?',cliente:''};
       tareaHtml=`<span style="font-weight:500;">${enc.nombre}</span><br><span style="font-size:11px;color:var(--muted);">${enc.cliente}</span>`;
       subHtml=`<span class="badge badge-muted">${r.fase||'—'}</span>`;
     } else {
@@ -898,140 +879,145 @@ function renderHoras() {
     }
     tbody.innerHTML+=`<tr>
       <td style="font-family:var(--mono);font-size:12px;white-space:nowrap;">${r.fecha}</td>
-      <td><div style="display:flex;align-items:center;gap:7px;">
-        <div class="avatar" style="width:26px;height:26px;font-size:10px;">${aud.nombre.slice(0,2).toUpperCase()}</div>
-        <span>${aud.nombre}</span>
-      </div></td>
-      <td>${tipoHtml}</td>
-      <td>${tareaHtml}</td>
-      <td>${subHtml}</td>
-      <td style="font-family:var(--mono);font-weight:500;">${r.horas.toFixed(1)}h</td>
+      <td><div style="display:flex;align-items:center;gap:7px;"><div class="avatar" style="width:26px;height:26px;font-size:10px;">${aud.nombre.slice(0,2).toUpperCase()}</div><span>${aud.nombre}</span></div></td>
+      <td>${tipoHtml}</td><td>${tareaHtml}</td><td>${subHtml}</td>
+      <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${r.horas.toFixed(1)}h</td>
       <td style="max-width:150px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.notas||'—'}</td>
       <td><button class="btn btn-danger btn-sm" onclick="eliminarRegistro('${r.id}')">✕</button></td>
     </tr>`;
   });
 }
 
-function eliminarRegistro(id) {
-  if(!confirm('¿Eliminar este registro?')) return;
+async function eliminarRegistro(id) {
+  if(!confirm('¿Eliminar este registro?'))return;
+  if(SB_LISTO) await SB.delete('registros',id);
   db.registros=db.registros.filter(r=>r.id!==id);
-  save('registros');
+  if(!SB_LISTO) saveLocal('registros');
   renderHoras();
   showToast('Registro eliminado','✕');
 }
 
 // ========== ENCARGOS ==========
 function renderEncargos() {
-  const search = document.getElementById('encargos-search').value.toLowerCase();
-  const filtroEstado = document.getElementById('encargos-filtro-estado').value;
-  let encs = db.encargos.filter(e=>{
+  const search=document.getElementById('encargos-search').value.toLowerCase();
+  const filtroEstado=document.getElementById('encargos-filtro-estado').value;
+  const filtroTipo=document.getElementById('encargos-filtro-tipo').value;
+  let encs=db.encargos.filter(e=>{
     const match=(e.nombre+e.cliente).toLowerCase().includes(search);
     const estado=filtroEstado?e.estado===filtroEstado:true;
-    return match&&estado;
+    const tipo=filtroTipo?e.tipo===filtroTipo:true;
+    return match&&estado&&tipo;
   });
-  const grid = document.getElementById('encargos-grid');
-  const empty = document.getElementById('encargos-empty');
+  const grid=document.getElementById('encargos-grid');
+  document.getElementById('encargos-empty').style.display=encs.length?'none':'block';
   grid.innerHTML='';
-  empty.style.display = encs.length?'none':'block';
-
+  const tipoBadge={'Aseguramiento':'badge-blue','Consultoría':'badge-purple','Auditoría Continua':'badge-teal'};
+  const tipoClass={'Aseguramiento':'tipo-aseguramiento','Consultoría':'tipo-consultoria','Auditoría Continua':'tipo-continua'};
   encs.forEach(e=>{
-    const exec = db.registros.filter(r=>r.encargoId===e.id).reduce((s,r)=>s+r.horas,0);
-    const pct = e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
-    const color = pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    const badgeClass = e.estado==='Activo'?'badge-green':e.estado==='Finalizado'?'badge-muted':'badge-amber';
-    grid.innerHTML+=`<div class="encargo-card">
-      <div class="encargo-client">${e.cliente}</div>
+    const exec=db.registros.filter(r=>(r.encargo_id||r.encargoId)===e.id).reduce((s,r)=>s+r.horas,0);
+    const pct=e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
+    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
+    const badgeEstado=e.estado==='Activo'?'badge-green':e.estado==='Finalizado'?'badge-muted':'badge-amber';
+    const tc=tipoClass[e.tipo]||'';
+    const tb=tipoBadge[e.tipo]||'badge-muted';
+    grid.innerHTML+=`<div class="encargo-card ${tc}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
+        <div class="encargo-client">${e.cliente}</div>
+        <span class="badge ${tb}" style="margin-left:8px;">${e.tipo||'—'}</span>
+      </div>
       <div class="encargo-name">${e.nombre}</div>
+      ${e.codigo?`<div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:8px;">Código: ${e.codigo}</div>`:''}
       <div class="encargo-stats">
         <div>
           <div class="encargo-hours-val">${exec.toFixed(1)}h</div>
           <div class="encargo-budget-label">${e.presupuesto>0?'de '+e.presupuesto+'h presupuestadas':'Sin presupuesto'}</div>
         </div>
-        <span class="badge ${badgeClass}">${e.estado}</span>
+        <span class="badge ${badgeEstado}">${e.estado}</span>
       </div>
-      ${e.presupuesto>0?`<div class="prog-wrap" style="margin-bottom:8px;">
-        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div>
-        <span class="prog-pct">${pct}%</span>
-      </div>`:''}
-      ${e.inicio||e.fin?`<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${e.inicio?e.inicio:''}${e.fin?' → '+e.fin:''}</div>`:''}
+      ${e.presupuesto>0?`<div class="prog-wrap" style="margin-bottom:8px;"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:''}
+      ${e.inicio||e.fin?`<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${e.inicio||''}${e.fin?' → '+e.fin:''}</div>`:''}
       <div class="encargo-actions">
         <button class="btn btn-ghost btn-sm" onclick="editarEncargo('${e.id}')">✎ Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="eliminarEncargo('${e.id}')">✕ Eliminar</button>
+        <button class="btn btn-danger btn-sm" onclick="eliminarEncargo('${e.id}')">✕</button>
       </div>
     </div>`;
   });
 }
 
 function abrirModalEncargo(id) {
-  editEncId = id||null;
-  document.getElementById('modal-enc-title').textContent = id?'Editar encargo':'Nuevo encargo';
-  if(id) {
+  editEncId=id||null;
+  document.getElementById('modal-enc-title').textContent=id?'Editar trabajo':'Nuevo trabajo de auditoría';
+  if(id){
     const e=db.encargos.find(x=>x.id===id)||{};
     document.getElementById('enc-cliente').value=e.cliente||'';
+    document.getElementById('enc-codigo').value=e.codigo||'';
     document.getElementById('enc-nombre').value=e.nombre||'';
+    document.getElementById('enc-tipo').value=e.tipo||'Aseguramiento';
     document.getElementById('enc-presupuesto').value=e.presupuesto||'';
     document.getElementById('enc-estado').value=e.estado||'Activo';
     document.getElementById('enc-inicio').value=e.inicio||'';
     document.getElementById('enc-fin').value=e.fin||'';
     document.getElementById('enc-notas').value=e.notas||'';
   } else {
-    ['enc-cliente','enc-nombre','enc-presupuesto','enc-inicio','enc-fin','enc-notas'].forEach(id=>document.getElementById(id).value='');
+    ['enc-cliente','enc-codigo','enc-nombre','enc-presupuesto','enc-inicio','enc-fin','enc-notas'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('enc-estado').value='Activo';
+    document.getElementById('enc-tipo').value='Aseguramiento';
   }
   document.getElementById('modal-encargo').classList.add('open');
 }
 
-function editarEncargo(id) { abrirModalEncargo(id); }
+function editarEncargo(id){abrirModalEncargo(id);}
 
-function guardarEncargo() {
-  const cliente = document.getElementById('enc-cliente').value.trim();
-  const nombre = document.getElementById('enc-nombre').value.trim();
-  if(!cliente||!nombre) { showToast('Cliente y nombre son obligatorios','⚠'); return; }
-  const enc = {
-    id: editEncId||uid(),
-    cliente, nombre,
-    presupuesto: parseFloat(document.getElementById('enc-presupuesto').value)||0,
-    estado: document.getElementById('enc-estado').value,
-    inicio: document.getElementById('enc-inicio').value,
-    fin: document.getElementById('enc-fin').value,
-    notas: document.getElementById('enc-notas').value,
-    creadoEn: editEncId?(db.encargos.find(e=>e.id===editEncId)||{}).creadoEn||Date.now():Date.now()
+async function guardarEncargo() {
+  const cliente=document.getElementById('enc-cliente').value.trim();
+  const nombre=document.getElementById('enc-nombre').value.trim();
+  if(!cliente||!nombre){showToast('Sociedad y nombre son obligatorios','⚠');return;}
+  const enc={
+    id:editEncId||uid(), cliente, nombre,
+    codigo:document.getElementById('enc-codigo').value.trim(),
+    tipo:document.getElementById('enc-tipo').value,
+    presupuesto:parseFloat(document.getElementById('enc-presupuesto').value)||0,
+    estado:document.getElementById('enc-estado').value,
+    inicio:document.getElementById('enc-inicio').value,
+    fin:document.getElementById('enc-fin').value,
+    notas:document.getElementById('enc-notas').value,
   };
-  if(editEncId) {
-    db.encargos=db.encargos.map(e=>e.id===editEncId?enc:e);
+  if(SB_LISTO){
+    if(editEncId){ await SB.update('encargos',editEncId,enc); db.encargos=db.encargos.map(e=>e.id===editEncId?enc:e); }
+    else { await SB.insert('encargos',enc); db.encargos.push(enc); }
   } else {
-    db.encargos.push(enc);
+    if(editEncId) db.encargos=db.encargos.map(e=>e.id===editEncId?enc:e);
+    else db.encargos.push(enc);
+    saveLocal('encargos');
   }
-  save('encargos');
   cerrarModal('modal-encargo');
   renderEncargos();
-  showToast(editEncId?'Encargo actualizado':'Encargo creado','✓');
+  showToast(editEncId?'Trabajo actualizado':'Trabajo creado','✓');
   editEncId=null;
 }
 
-function eliminarEncargo(id) {
-  if(!confirm('¿Eliminar este encargo? También se perderán los registros de horas asociados.')) return;
+async function eliminarEncargo(id) {
+  if(!confirm('¿Eliminar este trabajo? También se eliminarán los registros de horas asociados.'))return;
+  if(SB_LISTO){ await SB.delete('encargos',id); await Promise.all(db.registros.filter(r=>(r.encargo_id||r.encargoId)===id).map(r=>SB.delete('registros',r.id))); }
   db.encargos=db.encargos.filter(e=>e.id!==id);
-  db.registros=db.registros.filter(r=>r.encargoId!==id);
-  save('encargos'); save('registros');
+  db.registros=db.registros.filter(r=>(r.encargo_id||r.encargoId)!==id);
+  if(!SB_LISTO){saveLocal('encargos');saveLocal('registros');}
   renderEncargos();
-  showToast('Encargo eliminado','✕');
+  showToast('Trabajo eliminado','✕');
 }
 
 // ========== EQUIPO ==========
 function renderEquipo() {
-  const tbody = document.getElementById('equipo-tbody');
-  const empty = document.getElementById('equipo-empty');
+  const tbody=document.getElementById('equipo-tbody');
+  document.getElementById('equipo-empty').style.display=db.auditores.length?'none':'block';
   tbody.innerHTML='';
-  empty.style.display = db.auditores.length?'none':'block';
-  const mesActual = new Date().toISOString().slice(0,7);
-
+  const mes=new Date().toISOString().slice(0,7);
   db.auditores.forEach(a=>{
-    const totalH = db.registros.filter(r=>r.auditorId===a.id).reduce((s,r)=>s+r.horas,0);
-    const mesH = db.registros.filter(r=>r.auditorId===a.id&&r.fecha&&r.fecha.startsWith(mesActual)).reduce((s,r)=>s+r.horas,0);
-    const encIds = [...new Set(db.registros.filter(r=>r.auditorId===a.id&&r.tipo==='encargo').map(r=>r.encargoId))];
-    const activos = encIds.filter(id=>db.encargos.find(e=>e.id===id&&e.estado==='Activo')).length;
-    const rolBadge = a.rol==='Socio'?'badge-amber':a.rol==='Gerente'?'badge-blue':a.rol==='Senior'?'badge-teal':'badge-muted';
+    const totalH=db.registros.filter(r=>(r.auditor_id||r.auditorId)===a.id).reduce((s,r)=>s+r.horas,0);
+    const mesH=db.registros.filter(r=>(r.auditor_id||r.auditorId)===a.id&&r.fecha&&r.fecha.startsWith(mes)).reduce((s,r)=>s+r.horas,0);
+    const encIds=[...new Set(db.registros.filter(r=>(r.auditor_id||r.auditorId)===a.id&&r.tipo==='encargo').map(r=>r.encargo_id||r.encargoId))];
+    const activos=encIds.filter(id=>db.encargos.find(e=>e.id===id&&e.estado==='Activo')).length;
+    const rolBadge=a.rol==='Director de Auditoría'?'badge-amber':a.rol==='Gerente'?'badge-blue':a.rol==='Senior'?'badge-teal':'badge-muted';
     tbody.innerHTML+=`<tr>
       <td><div style="display:flex;align-items:center;gap:9px;">
         <div class="avatar">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>
@@ -1051,7 +1037,7 @@ function renderEquipo() {
 
 function abrirModalAuditor(id) {
   editAudId=id||null;
-  document.getElementById('modal-aud-title').textContent = id?'Editar auditor':'Añadir auditor';
+  document.getElementById('modal-aud-title').textContent=id?'Editar auditor':'Añadir auditor';
   if(id){
     const a=db.auditores.find(x=>x.id===id)||{};
     document.getElementById('aud-nombre').value=a.nombre||'';
@@ -1067,7 +1053,7 @@ function abrirModalAuditor(id) {
 
 function editarAuditor(id){abrirModalAuditor(id);}
 
-function guardarAuditor(){
+async function guardarAuditor() {
   const nombre=document.getElementById('aud-nombre').value.trim();
   if(!nombre){showToast('El nombre es obligatorio','⚠');return;}
   const aud={
@@ -1076,12 +1062,14 @@ function guardarAuditor(){
     rol:document.getElementById('aud-rol').value,
     email:document.getElementById('aud-email').value.trim()
   };
-  if(editAudId){
-    db.auditores=db.auditores.map(a=>a.id===editAudId?aud:a);
+  if(SB_LISTO){
+    if(editAudId){ await SB.update('auditores',editAudId,aud); db.auditores=db.auditores.map(a=>a.id===editAudId?aud:a); }
+    else { await SB.insert('auditores',aud); db.auditores.push(aud); }
   } else {
-    db.auditores.push(aud);
+    if(editAudId) db.auditores=db.auditores.map(a=>a.id===editAudId?aud:a);
+    else db.auditores.push(aud);
+    saveLocal('auditores');
   }
-  save('auditores');
   cerrarModal('modal-auditor');
   renderEquipo();
   updateSidebar();
@@ -1089,16 +1077,17 @@ function guardarAuditor(){
   editAudId=null;
 }
 
-function eliminarAuditor(id){
+async function eliminarAuditor(id) {
   if(!confirm('¿Eliminar este auditor?'))return;
+  if(SB_LISTO) await SB.delete('auditores',id);
   db.auditores=db.auditores.filter(a=>a.id!==id);
-  save('auditores');
+  if(!SB_LISTO) saveLocal('auditores');
   renderEquipo();
   updateSidebar();
   showToast('Auditor eliminado','✕');
 }
 
-function updateSidebar(){
+function updateSidebar() {
   if(db.auditores.length>0){
     const a=db.auditores[0];
     document.getElementById('sidebar-avatar').textContent=(a.iniciales||a.nombre.slice(0,2)).toUpperCase();
@@ -1108,7 +1097,7 @@ function updateSidebar(){
 }
 
 // ========== REPORTES ==========
-function switchReporte(name, el) {
+function switchReporte(name,el) {
   currentReporte=name;
   document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
@@ -1120,64 +1109,63 @@ function switchReporte(name, el) {
 
 function renderReporteActual() {
   const mes=document.getElementById('rep-mes').value;
-  let regs = mes ? db.registros.filter(r=>r.fecha&&r.fecha.startsWith(mes)) : db.registros;
+  let regs=mes?db.registros.filter(r=>r.fecha&&r.fecha.startsWith(mes)):db.registros;
   if(currentReporte==='encargos') renderRepEncargos(regs);
   if(currentReporte==='auditores') renderRepAuditores(regs);
   if(currentReporte==='tareas') renderRepTareas(regs);
 }
 
-function renderRepEncargos(regs){
+function renderRepEncargos(regs) {
   const tbody=document.getElementById('rep-enc-tbody');
   const empty=document.getElementById('rep-enc-empty');
   tbody.innerHTML='';
   if(!db.encargos.length){empty.style.display='block';return;}
   empty.style.display='none';
+  const tipoBadge={'Aseguramiento':'badge-blue','Consultoría':'badge-purple','Auditoría Continua':'badge-teal'};
   db.encargos.forEach(e=>{
-    const exec=regs.filter(r=>r.encargoId===e.id).reduce((s,r)=>s+r.horas,0);
+    const exec=regs.filter(r=>(r.encargo_id||r.encargoId)===e.id).reduce((s,r)=>s+r.horas,0);
     const pct=e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
     const rest=e.presupuesto>0?Math.max(0,e.presupuesto-exec):0;
     const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    const badgeClass=e.estado==='Activo'?'badge-green':e.estado==='Finalizado'?'badge-muted':'badge-amber';
+    const bE=e.estado==='Activo'?'badge-green':e.estado==='Finalizado'?'badge-muted':'badge-amber';
+    const bT=tipoBadge[e.tipo]||'badge-muted';
     tbody.innerHTML+=`<tr>
       <td>${e.cliente}</td>
       <td style="font-weight:500;">${e.nombre}</td>
+      <td><span class="badge ${bT}">${e.tipo||'—'}</span></td>
+      <td style="font-family:var(--mono);font-size:12px;">${e.codigo||'—'}</td>
       <td style="font-family:var(--mono);">${e.presupuesto||'—'}</td>
       <td style="font-family:var(--mono);color:var(--accent);">${exec.toFixed(1)}</td>
       <td style="font-family:var(--mono);">${e.presupuesto>0?rest.toFixed(1):'—'}</td>
-      <td>
-        ${e.presupuesto>0?`<div class="prog-wrap">
-          <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div>
-          <span class="prog-pct">${pct}%</span>
-        </div>`:'—'}
-      </td>
-      <td><span class="badge ${badgeClass}">${e.estado}</span></td>
+      <td>${e.presupuesto>0?`<div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:'—'}</td>
+      <td><span class="badge ${bE}">${e.estado}</span></td>
     </tr>`;
   });
 }
 
-function renderRepAuditores(regs){
+function renderRepAuditores(regs) {
   const tbody=document.getElementById('rep-aud-tbody');
   const empty=document.getElementById('rep-aud-empty');
   tbody.innerHTML='';
   if(!db.auditores.length){empty.style.display='block';return;}
   empty.style.display='none';
   db.auditores.forEach(a=>{
-    const myRegs=regs.filter(r=>r.auditorId===a.id);
+    const myRegs=regs.filter(r=>(r.auditor_id||r.auditorId)===a.id);
     const hEnc=myRegs.filter(r=>r.tipo==='encargo').reduce((s,r)=>s+r.horas,0);
     const hTar=myRegs.filter(r=>r.tipo==='tarea').reduce((s,r)=>s+r.horas,0);
-    const rolBadge=a.rol==='Socio'?'badge-amber':a.rol==='Gerente'?'badge-blue':a.rol==='Senior'?'badge-teal':'badge-muted';
+    const rb=a.rol==='Director de Auditoría'?'badge-amber':a.rol==='Gerente'?'badge-blue':a.rol==='Senior'?'badge-teal':'badge-muted';
     tbody.innerHTML+=`<tr>
       <td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar" style="width:26px;height:26px;font-size:10px;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>${a.nombre}</div></td>
-      <td><span class="badge ${rolBadge}">${a.rol}</span></td>
+      <td><span class="badge ${rb}">${a.rol}</span></td>
       <td style="font-family:var(--mono);">${hEnc.toFixed(1)}</td>
       <td style="font-family:var(--mono);">${hTar.toFixed(1)}</td>
-      <td style="font-family:var(--mono);font-weight:500;">${(hEnc+hTar).toFixed(1)}</td>
+      <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${(hEnc+hTar).toFixed(1)}</td>
       <td style="font-family:var(--mono);">${myRegs.length}</td>
     </tr>`;
   });
 }
 
-function renderRepTareas(regs){
+function renderRepTareas(regs) {
   const tbody=document.getElementById('rep-tar-tbody');
   const empty=document.getElementById('rep-tar-empty');
   const tarRegs=regs.filter(r=>r.tipo==='tarea');
@@ -1186,11 +1174,7 @@ function renderRepTareas(regs){
   empty.style.display='none';
   const total=tarRegs.reduce((s,r)=>s+r.horas,0);
   const grouped={};
-  tarRegs.forEach(r=>{
-    const k=r.tarea+'|||'+(r.subtarea||'--');
-    if(!grouped[k]) grouped[k]={tarea:r.tarea,subtarea:r.subtarea||'--',horas:0,count:0};
-    grouped[k].horas+=r.horas; grouped[k].count++;
-  });
+  tarRegs.forEach(r=>{const k=r.tarea+'|||'+(r.subtarea||'--');if(!grouped[k])grouped[k]={tarea:r.tarea,subtarea:r.subtarea||'--',horas:0,count:0};grouped[k].horas+=r.horas;grouped[k].count++;});
   Object.values(grouped).sort((a,b)=>b.horas-a.horas).forEach(g=>{
     const pct=total>0?Math.round(g.horas/total*100):0;
     tbody.innerHTML+=`<tr>
@@ -1198,45 +1182,33 @@ function renderRepTareas(regs){
       <td style="color:var(--muted);">${g.subtarea==='--'?'—':g.subtarea}</td>
       <td style="font-family:var(--mono);color:var(--teal);">${g.horas.toFixed(1)}</td>
       <td style="font-family:var(--mono);">${g.count}</td>
-      <td>
-        <div class="prog-wrap">
-          <div class="prog-bar" style="min-width:60px;"><div class="prog-fill" style="width:${pct}%;background:var(--teal);"></div></div>
-          <span class="prog-pct">${pct}%</span>
-        </div>
-      </td>
+      <td><div class="prog-wrap"><div class="prog-bar" style="min-width:60px;"><div class="prog-fill" style="width:${pct}%;background:var(--teal);"></div></div><span class="prog-pct">${pct}%</span></div></td>
     </tr>`;
   });
 }
 
 // ========== EXPORT CSV ==========
-function exportarCSV(){
-  const headers=['ID','Fecha','Auditor','Tipo','Encargo/Cliente','Tarea','Sub-tarea','Fase','Horas','Notas'];
+function exportarCSV() {
+  const headers=['ID','Fecha','Auditor','Tipo','Sociedad','Trabajo','Código','Tarea','Sub-tarea','Fase','Horas','Notas'];
   const rows=db.registros.map(r=>{
-    const aud=(db.auditores.find(a=>a.id===r.auditorId)||{nombre:''}).nombre;
-    const enc=r.tipo==='encargo'?(db.encargos.find(e=>e.id===r.encargoId)||{nombre:'',cliente:''}):null;
-    return [
-      r.id, r.fecha, aud, r.tipo,
-      enc?enc.cliente+' — '+enc.nombre:'',
-      r.tarea||'', r.subtarea||'', r.fase||'',
-      r.horas, (r.notas||'').replace(/"/g,'""')
-    ].map(v=>`"${v}"`).join(',');
+    const aud=(db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId))||{nombre:''}).nombre;
+    const enc=r.tipo==='encargo'?(db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:'',cliente:'',codigo:''}):null;
+    return [r.id,r.fecha,aud,r.tipo,enc?enc.cliente:'',enc?enc.nombre:'',enc?enc.codigo||'':'',r.tarea||'',r.subtarea||'',r.fase||'',r.horas,(r.notas||'').replace(/"/g,'""')].map(v=>`"${v}"`).join(',');
   });
   const csv=[headers.join(','),...rows].join('\n');
   const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='audithoras_export_'+new Date().toISOString().slice(0,10)+'.csv';
+  const a=document.createElement('a'); a.href=url; a.download='auditronic_'+new Date().toISOString().slice(0,10)+'.csv';
   a.click(); URL.revokeObjectURL(url);
   showToast('CSV exportado','↓');
 }
 
 // ========== MODALS ==========
 function cerrarModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-overlay').forEach(overlay=>{
-  overlay.addEventListener('click',e=>{if(e.target===overlay) overlay.classList.remove('open');});
-});
+document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o) o.classList.remove('open');});});
 
 // ========== TOAST ==========
-function showToast(msg,icon='✓'){
+function showToast(msg,icon='✓') {
   const t=document.getElementById('toast');
   document.getElementById('toast-msg').textContent=msg;
   document.getElementById('toast-icon').textContent=icon;
@@ -1245,15 +1217,18 @@ function showToast(msg,icon='✓'){
 }
 
 // ========== INIT ==========
-function init(){
+async function init() {
   const now=new Date();
   document.getElementById('reg-fecha').value=now.toISOString().split('T')[0];
   document.getElementById('horas-filtro-mes').value=now.toISOString().slice(0,7);
   document.getElementById('rep-mes').value=now.toISOString().slice(0,7);
-  document.getElementById('dash-date').textContent=now.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  await cargarDatos();
   updateAuditorSelect('horas-filtro-auditor');
   updateSidebar();
   renderDashboard();
+  if(!SB_LISTO) {
+    showToast('Modo local — configura Supabase para compartir datos','⚠');
+  }
 }
 init();
 </script>
