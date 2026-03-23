@@ -727,13 +727,15 @@ function getPlanActivo() {
   const m=now.getMonth()+1;
   return m>=7?`${y}-${y+1}`:`${y-1}-${y}`;
 }
-function generarPlanes(n=5) {
-  const now=new Date();
-  const y=now.getFullYear();
-  const m=now.getMonth()+1;
-  const base=m>=7?y:y-1;
-  const planes=[];
-  for(let i=-(n-2);i<=2;i++) planes.push(`${base+i}-${base+i+1}`);
+function generarPlanes(n=10) {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = now.getMonth() + 1;
+  const base = m >= 7 ? y : y - 1;
+  const planes = [];
+  for(let i = -(n-3); i <= 3; i++) {
+    planes.push(`${base+i}-${base+i+1}`);
+  }
   return planes;
 }
 function llenarSelectPlanes(selId,incluirTodos=false) {
