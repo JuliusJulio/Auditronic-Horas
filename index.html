@@ -532,7 +532,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
       <div class="table-card">
         <div class="table-header"><div class="table-title">Horas por otros trabajos</div></div>
         <table>
-          <thead><tr><th>Trabajo</th><th>Descripción</th><th>Ppto (h)</th><th>Ejecutado (h)</th><th>% Avance</th></tr></thead>
+          <thead><tr><th>Sociedad</th><th>Trabajo</th><th>Código</th><th>Descripción</th><th>Ppto (h)</th><th>Ejecutado (h)</th><th>% Avance</th></tr></thead>
           <tbody id="rep-otros-tbody"></tbody>
         </table>
         <div class="empty" id="rep-otros-empty"><div class="empty-text">Sin registros de otros trabajos</div></div>
@@ -611,9 +611,20 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
 </div>
 
 <!-- ===== MODAL OTRO TRABAJO ===== -->
+<!-- ===== MODAL OTRO TRABAJO ===== -->
 <div class="modal-overlay" id="modal-otro">
   <div class="modal modal-sm">
     <div class="modal-title" id="modal-otro-title">Nuevo otro trabajo</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Sociedad</label>
+        <input type="text" class="form-input" id="otro-sociedad" placeholder="Nombre de la sociedad">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Código (opcional)</label>
+        <input type="text" class="form-input" id="otro-codigo" placeholder="Ej: OT-2025-001">
+      </div>
+    </div>
     <div class="form-group">
       <label class="form-label">Nombre *</label>
       <input type="text" class="form-input" id="otro-nombre" placeholder="Nombre del trabajo">
@@ -1210,10 +1221,12 @@ function renderOtros(){
     const pct=o.presupuesto>0?Math.min(100,Math.round(exec/o.presupuesto*100)):0;
     const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
     grid.innerHTML+=`<div class="encargo-card tipo-otro">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
+        <div class="encargo-client">${o.sociedad||''}</div>
         <span class="badge badge-orange">Otro trabajo</span>
       </div>
       <div class="encargo-name">${o.nombre}</div>
+      ${o.codigo?`<div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:6px;">Código: ${o.codigo}</div>`:''}
       ${o.descripcion?`<div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.4;">${o.descripcion}</div>`:''}
       <div class="encargo-stats">
         <div>
@@ -1243,13 +1256,34 @@ function abrirModalOtro(id){
   }
   document.getElementById('modal-otro').classList.add('open');
 }
-
+function abrirModalOtro(id){
+  editOtroId=id||null;
+  document.getElementById('modal-otro-title').textContent=id?'Editar trabajo':'Nuevo otro trabajo';
+  if(id){
+    const o=db.otros.find(x=>x.id===id)||{};
+    document.getElementById('otro-nombre').value=o.nombre||'';
+    document.getElementById('otro-sociedad').value=o.sociedad||'';
+    document.getElementById('otro-codigo').value=o.codigo||'';
+    document.getElementById('otro-desc').value=o.descripcion||'';
+    document.getElementById('otro-presupuesto').value=o.presupuesto||'';
+  }else{
+    ['otro-nombre','otro-sociedad','otro-codigo','otro-desc','otro-presupuesto'].forEach(i=>document.getElementById(i).value='');
+  }
+  document.getElementById('modal-otro').classList.add('open');
+}
 function editarOtro(id){abrirModalOtro(id);}
 
 async function guardarOtro(){
   const nombre=document.getElementById('otro-nombre').value.trim();
   if(!nombre){showToast('El nombre es obligatorio','⚠');return;}
-  const o={id:editOtroId||uid(),nombre,descripcion:document.getElementById('otro-desc').value.trim(),presupuesto:parseFloat(document.getElementById('otro-presupuesto').value)||0};
+  const o={
+    id:editOtroId||uid(),
+    nombre,
+    sociedad:document.getElementById('otro-sociedad').value.trim(),
+    codigo:document.getElementById('otro-codigo').value.trim(),
+    descripcion:document.getElementById('otro-desc').value.trim(),
+    presupuesto:parseFloat(document.getElementById('otro-presupuesto').value)||0
+  };
   if(SB_LISTO){
     if(editOtroId){await SB.update('otros_trabajos',editOtroId,o);db.otros=db.otros.map(x=>x.id===editOtroId?o:x);}
     else{await SB.insert('otros_trabajos',o);db.otros.push(o);}
@@ -1437,7 +1471,9 @@ function renderRepOtros(regs){
     const pct=o.presupuesto>0?Math.min(100,Math.round(exec/o.presupuesto*100)):0;
     const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
     tbody.innerHTML+=`<tr>
+      <td style="color:var(--muted);font-size:12px;">${o.sociedad||'—'}</td>
       <td style="font-weight:500;">${o.nombre}</td>
+      <td style="font-family:var(--mono);font-size:12px;">${o.codigo||'—'}</td>
       <td style="color:var(--muted);font-size:12px;">${o.descripcion||'—'}</td>
       <td style="font-family:var(--mono);">${o.presupuesto||'—'}</td>
       <td style="font-family:var(--mono);color:var(--accent);">${exec.toFixed(1)}</td>
