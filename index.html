@@ -603,14 +603,18 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
       <label class="form-label">Notas</label>
       <textarea class="form-textarea" id="enc-notas" placeholder="Descripción o notas internas…"></textarea>
     </div>
+    <div class="form-group">
+      <label class="form-label">Auditores asignados</label>
+      <div id="enc-auditores-list" style="display:flex;flex-wrap:wrap;gap:8px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;min-height:42px;">
+      </div>
+      <div class="form-hint">Selecciona los auditores asignados a este trabajo</div>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="cerrarModal('modal-encargo')">Cancelar</button>
       <button class="btn btn-primary" onclick="guardarEncargo()">Guardar trabajo</button>
     </div>
   </div>
 </div>
-
-<!-- ===== MODAL OTRO TRABAJO ===== -->
 <!-- ===== MODAL OTRO TRABAJO ===== -->
 <div class="modal-overlay" id="modal-otro">
   <div class="modal modal-sm">
@@ -637,6 +641,12 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
       <label class="form-label">Presupuesto de horas (opcional)</label>
       <input type="number" class="form-input" id="otro-presupuesto" min="0" step="0.5" placeholder="0">
       <div class="form-hint">Deja en 0 si no aplica</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Auditores asignados</label>
+      <div id="otro-auditores-list" style="display:flex;flex-wrap:wrap;gap:8px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;min-height:42px;">
+      </div>
+      <div class="form-hint">Selecciona los auditores asignados a este trabajo</div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="cerrarModal('modal-otro')">Cancelar</button>
@@ -1099,6 +1109,15 @@ function renderEncargos(){
       </div>
       ${e.presupuesto>0?`<div class="prog-wrap" style="margin-bottom:8px;"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:''}
       ${e.inicio||e.fin?`<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${e.inicio||''}${e.fin?' → '+e.fin:''}</div>`:''}
+      ${e.auditores_ids&&e.auditores_ids.length>0?`
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
+        ${e.auditores_ids.map(aid=>{
+          const a=db.auditores.find(x=>x.id===aid);
+          return a?`<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:10px;background:rgba(22,163,74,0.08);color:var(--accent);border:1px solid rgba(22,163,74,0.2);">
+            <div style="width:14px;height:14px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>
+            ${a.nombre}</span>`:'';
+        }).join('')}
+      </div>`:''}
       <div class="encargo-actions">
         ${e.presupuesto>0?`<button class="btn btn-ghost btn-sm" onclick="verDesglose('${e.id}')">▤ Cotejo</button>`:''}
         <button class="btn btn-ghost btn-sm" onclick="editarEncargo('${e.id}')">✎ Editar</button>
@@ -1149,7 +1168,37 @@ function verDesglose(encargoId){
   document.getElementById('desglose-content').innerHTML=html;
   document.getElementById('modal-desglose').classList.add('open');
 }
+function renderAuditoresCheck(containerId, selectedIds=[]){
+  const container=document.getElementById(containerId);
+  if(!container)return;
+  container.innerHTML='';
+  if(db.auditores.length===0){
+    container.innerHTML='<span style="font-size:12px;color:var(--muted);">No hay auditores registrados</span>';
+    return;
+  }
+  db.auditores.forEach(a=>{
+    const isSelected=selectedIds.includes(a.id);
+    const chip=document.createElement('div');
+    chip.style.cssText=`display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:99px;cursor:pointer;font-size:12px;border:1px solid ${isSelected?'var(--accent)':'var(--border2)'};background:${isSelected?'rgba(22,163,74,0.08)':'var(--bg)'};color:${isSelected?'var(--accent)':'var(--muted2)'};transition:all 0.15s;`;
+    chip.innerHTML=`<div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#166534);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:#fff;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>${a.nombre}`;
+    chip.dataset.id=a.id;
+    chip.dataset.selected=isSelected?'1':'0';
+    chip.onclick=()=>{
+      const sel=chip.dataset.selected==='1';
+      chip.dataset.selected=sel?'0':'1';
+      chip.style.border=`1px solid ${!sel?'var(--accent)':'var(--border2)'}`;
+      chip.style.background=!sel?'rgba(22,163,74,0.08)':'var(--bg)';
+      chip.style.color=!sel?'var(--accent)':'var(--muted2)';
+    };
+    container.appendChild(chip);
+  });
+}
 
+function getSelectedAuditores(containerId){
+  const container=document.getElementById(containerId);
+  if(!container)return[];
+  return [...container.querySelectorAll('[data-selected="1"]')].map(c=>c.dataset.id);
+}
 function abrirModalEncargo(id){
   editEncId=id||null;
   llenarSelectPlanes('enc-plan');
@@ -1166,11 +1215,13 @@ function abrirModalEncargo(id){
     document.getElementById('enc-inicio').value=e.inicio||'';
     document.getElementById('enc-fin').value=e.fin||'';
     document.getElementById('enc-notas').value=e.notas||'';
+    renderAuditoresCheck('enc-auditores-list', e.auditores_ids||[]);
   }else{
     ['enc-cliente','enc-codigo','enc-nombre','enc-presupuesto','enc-inicio','enc-fin','enc-notas'].forEach(i=>document.getElementById(i).value='');
     document.getElementById('enc-estado').value='Activo';
     document.getElementById('enc-tipo').value='Aseguramiento';
     document.getElementById('enc-plan').value=getPlanActivo();
+    renderAuditoresCheck('enc-auditores-list',[]);
   }
   document.getElementById('modal-encargo').classList.add('open');
 }
@@ -1191,6 +1242,7 @@ async function guardarEncargo(){
     inicio:document.getElementById('enc-inicio').value,
     fin:document.getElementById('enc-fin').value,
     notas:document.getElementById('enc-notas').value,
+    auditores_ids:getSelectedAuditores('enc-auditores-list'),
   };
   if(SB_LISTO){
     if(editEncId){await SB.update('encargos',editEncId,enc);db.encargos=db.encargos.map(e=>e.id===editEncId?enc:e);}
@@ -1237,6 +1289,15 @@ function renderOtros(){
         </div>
       </div>
       ${o.presupuesto>0?`<div class="prog-wrap" style="margin-bottom:8px;"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:''}
+      ${o.auditores_ids&&o.auditores_ids.length>0?`
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
+        ${o.auditores_ids.map(aid=>{
+          const a=db.auditores.find(x=>x.id===aid);
+          return a?`<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:10px;background:rgba(22,163,74,0.08);color:var(--accent);border:1px solid rgba(22,163,74,0.2);">
+            <div style="width:14px;height:14px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>
+            ${a.nombre}</span>`:'';
+        }).join('')}
+      </div>`:''}
       <div class="encargo-actions">
         <button class="btn btn-ghost btn-sm" onclick="editarOtro('${o.id}')">✎ Editar</button>
         <button class="btn btn-danger btn-sm" onclick="eliminarOtro('${o.id}')">✕</button>
@@ -1244,20 +1305,7 @@ function renderOtros(){
     </div>`;
   });
 }
-
-function abrirModalOtro(id){
-  editOtroId=id||null;
-  document.getElementById('modal-otro-title').textContent=id?'Editar trabajo':'Nuevo otro trabajo';
-  if(id){
-    const o=db.otros.find(x=>x.id===id)||{};
-    document.getElementById('otro-nombre').value=o.nombre||'';
-    document.getElementById('otro-desc').value=o.descripcion||'';
-    document.getElementById('otro-presupuesto').value=o.presupuesto||'';
-  }else{
-    ['otro-nombre','otro-desc','otro-presupuesto'].forEach(i=>document.getElementById(i).value='');
-  }
-  document.getElementById('modal-otro').classList.add('open');
-}
+  
 function abrirModalOtro(id){
   editOtroId=id||null;
   document.getElementById('modal-otro-title').textContent=id?'Editar trabajo':'Nuevo otro trabajo';
@@ -1268,8 +1316,10 @@ function abrirModalOtro(id){
     document.getElementById('otro-codigo').value=o.codigo||'';
     document.getElementById('otro-desc').value=o.descripcion||'';
     document.getElementById('otro-presupuesto').value=o.presupuesto||'';
+    renderAuditoresCheck('otro-auditores-list',o.auditores_ids||[]);
   }else{
     ['otro-nombre','otro-sociedad','otro-codigo','otro-desc','otro-presupuesto'].forEach(i=>document.getElementById(i).value='');
+    renderAuditoresCheck('otro-auditores-list',[]);
   }
   document.getElementById('modal-otro').classList.add('open');
 }
@@ -1284,7 +1334,8 @@ async function guardarOtro(){
     sociedad:document.getElementById('otro-sociedad').value.trim(),
     codigo:document.getElementById('otro-codigo').value.trim(),
     descripcion:document.getElementById('otro-desc').value.trim(),
-    presupuesto:parseFloat(document.getElementById('otro-presupuesto').value)||0
+    presupuesto:parseFloat(document.getElementById('otro-presupuesto').value)||0,
+    auditores_ids:getSelectedAuditores('otro-auditores-list'),
   };
   if(SB_LISTO){
     if(editOtroId){await SB.update('otros_trabajos',editOtroId,o);db.otros=db.otros.map(x=>x.id===editOtroId?o:x);}
