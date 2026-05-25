@@ -5,149 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Auditronic</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#f0f7f2;--bg2:#ffffff;--bg3:#e8f5ee;--bg4:#d4edde;
-  --border:rgba(22,101,52,0.1);--border2:rgba(22,101,52,0.2);
-  --text:#0f2d1a;--muted:#4a7c5e;--muted2:#2d6a4f;
-  --accent:#16a34a;--accent2:#15803d;
-  --green:#16a34a;--amber:#d97706;--red:#dc2626;--teal:#0d9488;
-  --sidebar:#0f2d1a;--sidebar2:#1a3d26;
-  --sidebar-text:#e8f5ee;--sidebar-muted:#6b9e7e;--sidebar-active:#16a34a;
-  --font:'Outfit',sans-serif;--mono:'DM Mono',monospace;--serif:'DM Serif Display',serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
-.app{display:flex;min-height:100vh;}
-.sidebar{width:240px;background:var(--sidebar);border-right:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;flex-shrink:0;}
-.logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px;}
-.logo-img{width:38px;height:38px;object-fit:contain;flex-shrink:0;}
-.logo-mark{font-family:var(--serif);font-size:20px;color:#fff;}
-.logo-mark span{color:#4ade80;}
-.logo-sub{font-size:9px;color:var(--sidebar-muted);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px;font-family:var(--mono);line-height:1.4;}
-.nav{padding:10px 8px;flex:1;}
-.nav-section{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--sidebar-muted);padding:14px 10px 5px;font-family:var(--mono);}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--sidebar-muted);font-size:13px;transition:all 0.15s;margin-bottom:1px;}
-.nav-item:hover{background:var(--sidebar2);color:var(--sidebar-text);}
-.nav-item.active{background:var(--sidebar-active);color:#fff;font-weight:500;}
-.nav-icon{font-size:15px;width:18px;text-align:center;}
-.sidebar-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,0.07);}
-.user-chip{display:flex;align-items:center;gap:10px;}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#166534);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,0.15);}
-.user-info .name{font-size:13px;font-weight:500;color:var(--sidebar-text);}
-.user-info .role{font-size:11px;color:var(--sidebar-muted);}
-.main{flex:1;display:flex;flex-direction:column;overflow-x:hidden;background:var(--bg);}
-.page-header{padding:22px 30px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;background:var(--bg2);}
-.page-title{font-family:var(--serif);font-size:24px;color:var(--text);}
-.page-sub{font-size:12px;color:var(--muted);margin-top:4px;}
-.header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
-.content{padding:24px 30px;flex:1;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:var(--font);transition:all 0.15s;white-space:nowrap;}
-.btn-primary{background:var(--accent);color:#fff;}
-.btn-primary:hover{background:var(--accent2);}
-.btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border2);}
-.btn-ghost:hover{background:var(--bg4);}
-.btn-danger{background:rgba(220,38,38,0.07);color:var(--red);border:1px solid rgba(220,38,38,0.15);}
-.btn-danger:hover{background:rgba(220,38,38,0.14);}
-.btn-sm{padding:5px 11px;font-size:12px;border-radius:6px;}
-.view{display:none;}
-.view.active{display:block;}
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px;}
-.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-left:3px solid transparent;}
-.kpi-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:var(--mono);}
-.kpi-value{font-size:26px;font-weight:600;margin:5px 0 2px;letter-spacing:-1px;}
-.kpi-delta{font-size:11px;color:var(--muted);}
-.kpi-green{border-left-color:var(--green);} .kpi-green .kpi-value{color:var(--green);}
-.kpi-emerald{border-left-color:#059669;} .kpi-emerald .kpi-value{color:#059669;}
-.kpi-amber{border-left-color:var(--amber);} .kpi-amber .kpi-value{color:var(--amber);}
-.kpi-teal{border-left-color:var(--teal);} .kpi-teal .kpi-value{color:var(--teal);}
-.kpi-blue{border-left-color:#2563eb;} .kpi-blue .kpi-value{color:#2563eb;}
-.table-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
-.table-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2);}
-.table-title{font-size:14px;font-weight:500;color:var(--text);}
-.table-sub{font-size:12px;color:var(--muted);}
-table{width:100%;border-collapse:collapse;}
-thead th{padding:10px 16px;text-align:left;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-family:var(--mono);font-weight:400;border-bottom:1px solid var(--border);background:var(--bg3);}
-tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
-tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:var(--bg3);}
-tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
-.prog-wrap{display:flex;align-items:center;gap:8px;}
-.prog-bar{flex:1;height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;min-width:70px;}
-.prog-fill{height:100%;border-radius:99px;}
-.prog-pct{font-size:11px;font-family:var(--mono);color:var(--muted);min-width:34px;text-align:right;}
-.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:500;font-family:var(--mono);}
-.badge-green{background:rgba(22,163,74,0.1);color:#15803d;}
-.badge-amber{background:rgba(217,119,6,0.1);color:#b45309;}
-.badge-red{background:rgba(220,38,38,0.08);color:#b91c1c;}
-.badge-blue{background:rgba(37,99,235,0.08);color:#1d4ed8;}
-.badge-teal{background:rgba(13,148,136,0.1);color:#0f766e;}
-.badge-purple{background:rgba(124,58,237,0.08);color:#6d28d9;}
-.badge-orange{background:rgba(234,88,12,0.08);color:#c2410c;}
-.badge-muted{background:var(--bg4);color:var(--muted2);}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:26px;width:520px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.12);}
-.modal-sm{width:400px;}
-.modal-title{font-family:var(--serif);font-size:20px;margin-bottom:20px;color:var(--text);}
-.form-group{margin-bottom:15px;}
-.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;letter-spacing:0.4px;font-weight:500;}
-.form-input,.form-select,.form-textarea{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;transition:border 0.15s;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(22,163,74,0.1);}
-.form-input.error{border-color:var(--red);}
-.form-select{cursor:pointer;}
-.form-textarea{resize:vertical;min-height:70px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
-.form-hint{font-size:11px;color:var(--muted);margin-top:4px;}
-.form-error{font-size:11px;color:var(--red);margin-top:4px;display:none;}
-.char-counter{font-size:11px;color:var(--muted);text-align:right;margin-top:4px;font-family:var(--mono);}
-.char-counter.warn{color:var(--amber);}
-.char-counter.over{color:var(--red);}
-.tabs{display:flex;gap:3px;background:var(--bg2);padding:4px;border-radius:10px;border:1px solid var(--border);width:fit-content;margin-bottom:20px;flex-wrap:wrap;}
-.tab{padding:7px 16px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--muted2);transition:all 0.15s;}
-.tab.active{background:var(--accent);color:#fff;font-weight:500;}
-.tab:hover:not(.active){background:var(--bg3);color:var(--text);}
-.toolbar{display:flex;gap:10px;margin-bottom:18px;align-items:center;flex-wrap:wrap;}
-.search-input{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 13px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;width:200px;transition:border 0.15s;}
-.search-input:focus{border-color:var(--accent);}
-.search-input::placeholder{color:var(--muted);}
-.encargos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
-.encargo-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all 0.15s;border-top:3px solid var(--accent);}
-.encargo-card:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(22,163,74,0.08);}
-.encargo-card.tipo-aseguramiento{border-top-color:#2563eb;}
-.encargo-card.tipo-consultoria{border-top-color:#7c3aed;}
-.encargo-card.tipo-continua{border-top-color:#0d9488;}
-.encargo-card.tipo-otro{border-top-color:#ea580c;}
-.encargo-client{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:var(--mono);margin-bottom:3px;}
-.encargo-name{font-size:15px;font-weight:500;margin-bottom:10px;line-height:1.3;color:var(--text);}
-.encargo-stats{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
-.encargo-hours-val{font-size:24px;font-weight:600;font-family:var(--mono);color:var(--accent);}
-.encargo-budget-label{font-size:11px;color:var(--muted);}
-.encargo-actions{display:flex;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
-.empty{padding:50px 20px;text-align:center;color:var(--muted);}
-.empty-icon{font-size:32px;margin-bottom:10px;opacity:0.3;}
-.empty-text{font-size:13px;}
-.toast{position:fixed;bottom:22px;right:22px;background:var(--sidebar);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 16px;font-size:13px;transform:translateY(70px);opacity:0;transition:all 0.25s;z-index:200;display:flex;align-items:center;gap:9px;max-width:320px;color:#fff;}
-.toast.show{transform:translateY(0);opacity:1;}
-.report-filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
-.tipo-selector{display:flex;gap:8px;margin-bottom:18px;}
-.tipo-card{flex:1;background:var(--bg2);border:2px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:all 0.15s;text-align:center;}
-.tipo-card:hover{border-color:var(--border2);}
-.tipo-card.selected{border-color:var(--accent);background:rgba(22,163,74,0.04);}
-.tipo-card-icon{font-size:18px;margin-bottom:4px;}
-.tipo-card-label{font-size:12px;font-weight:500;color:var(--text);}
-.tipo-card-desc{font-size:10px;color:var(--muted);margin-top:2px;}
-/* Desglose fases */
-.fase-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
-.fase-row:last-child{border-bottom:none;}
-.fase-name{font-size:13px;font-weight:500;}
-.fase-val{font-family:var(--mono);font-size:13px;color:var(--accent);}
-.fase-pct{font-size:11px;color:var(--muted);font-family:var(--mono);}
-/* Plan badge */
-.plan-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:rgba(37,99,235,0.08);color:#1d4ed8;border-radius:99px;font-size:10px;font-family:var(--mono);font-weight:500;}
-.plan-badge.activo{background:rgba(22,163,74,0.1);color:#15803d;}
-</style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div class="app">
@@ -155,7 +13,6 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo">
-    <img class="logo-img" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAARC" alt="logo" onerror="this.style.display='none'">
     <div>
       <div class="logo-mark">Audit<span>ronic</span></div>
       <div class="logo-sub">Gestión de tiempo<br>Auditoría</div>
@@ -227,37 +84,37 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
         <div class="kpi-delta" id="kpi-plan-detalle">0/0 trabajos finalizados</div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+    <div class="dashboard-row">
       <div class="table-card">
         <div class="table-header">
           <div class="table-title">Últimos registros</div>
-          <a onclick="showView('horas')" style="font-size:12px;color:var(--accent);cursor:pointer;">Ver todos →</a>
+          <a onclick="showView('horas')" class="link">Ver todos →</a>
         </div>
         <table>
           <thead><tr><th>Fecha</th><th>Auditor</th><th>Descripción</th><th>Horas</th></tr></thead>
           <tbody id="dash-recent"></tbody>
         </table>
-        <div class="empty" id="dash-recent-empty" style="padding:30px;"><div class="empty-text">Sin registros aún</div></div>
+        <div class="empty" id="dash-recent-empty"><div class="empty-text">Sin registros aún</div></div>
       </div>
       <div class="table-card">
         <div class="table-header">
           <div class="table-title">Estado de trabajos (plan activo)</div>
-          <a onclick="showView('encargos')" style="font-size:12px;color:var(--accent);cursor:pointer;">Gestionar →</a>
+          <a onclick="showView('encargos')" class="link">Gestionar →</a>
         </div>
         <table>
           <thead><tr><th>Trabajo</th><th>Ejecutado</th><th>Progreso</th></tr></thead>
           <tbody id="dash-encargos"></tbody>
         </table>
-        <div class="empty" id="dash-encargos-empty" style="padding:30px;"><div class="empty-text">Sin trabajos en el plan activo</div></div>
+        <div class="empty" id="dash-encargos-empty"><div class="empty-text">Sin trabajos en el plan activo</div></div>
       </div>
     </div>
-    <div class="table-card" style="margin-top:18px;">
+    <div class="table-card mt-18">
       <div class="table-header"><div class="table-title">Horas por tipo de tarea (este mes)</div></div>
       <table>
         <thead><tr><th>Tarea</th><th>Sub-tarea</th><th>Horas</th><th>% del total</th></tr></thead>
         <tbody id="dash-tareas"></tbody>
       </table>
-      <div class="empty" id="dash-tareas-empty" style="padding:30px;"><div class="empty-text">Sin registros de tareas generales</div></div>
+      <div class="empty" id="dash-tareas-empty"><div class="empty-text">Sin registros de tareas generales</div></div>
     </div>
   </div>
 </div>
@@ -268,7 +125,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
     <div><div class="page-title">Registrar horas</div><div class="page-sub">Añade un nuevo registro de tiempo</div></div>
   </div>
   <div class="content">
-    <div style="max-width:620px;">
+    <div class="form-container">
       <div class="tipo-selector">
         <div class="tipo-card selected" id="tipo-encargo-card" onclick="selectTipo('encargo')">
           <div class="tipo-card-icon">◉</div>
@@ -286,18 +143,17 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
           <div class="tipo-card-desc">Colaboración, formación…</div>
         </div>
       </div>
-      <div class="table-card" style="padding:24px;overflow:visible;border:1px solid var(--border);">
-        <div class="form-row" style="margin-bottom:15px;">
-          <div class="form-group" style="margin:0;">
+      <div class="form-card">
+        <div class="form-row mb-15">
+          <div class="form-group m-0">
             <label class="form-label">Fecha *</label>
             <input type="date" class="form-input" id="reg-fecha">
           </div>
-          <div class="form-group" style="margin:0;">
+          <div class="form-group m-0">
             <label class="form-label">Auditor *</label>
             <select class="form-select" id="reg-auditor"><option value="">— seleccionar —</option></select>
           </div>
         </div>
-        <!-- Campos trabajo auditoría -->
         <div id="campos-encargo">
           <div class="form-group">
             <label class="form-label">Trabajo de auditoría *</label>
@@ -313,17 +169,15 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
             </select>
           </div>
         </div>
-        <!-- Campos otro trabajo -->
-        <div id="campos-otro" style="display:none;">
+        <div id="campos-otro" class="hidden">
           <div class="form-group">
             <label class="form-label">Otro trabajo *</label>
             <select class="form-select" id="reg-otro"><option value="">— seleccionar —</option></select>
           </div>
         </div>
-        <!-- Campos tarea general -->
-        <div id="campos-tarea" style="display:none;">
-          <div class="form-row" style="margin-bottom:15px;">
-            <div class="form-group" style="margin:0;">
+        <div id="campos-tarea" class="hidden">
+          <div class="form-row mb-15">
+            <div class="form-group m-0">
               <label class="form-label">Tarea *</label>
               <select class="form-select" id="reg-tarea" onchange="updateSubtareas()">
                 <option value="">— seleccionar —</option>
@@ -336,30 +190,30 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
                 <option value="FESTIVOS Y VACACIONES">FESTIVOS Y VACACIONES</option>
               </select>
             </div>
-            <div class="form-group" style="margin:0;">
+            <div class="form-group m-0">
               <label class="form-label">Sub-tarea</label>
               <select class="form-select" id="reg-subtarea"><option value="--">—</option></select>
             </div>
           </div>
         </div>
-        <div class="form-row" style="margin-bottom:15px;">
-          <div class="form-group" style="margin:0;">
-            <label class="form-label">Horas * <span style="color:var(--muted);font-weight:400;">(máx. 10)</span></label>
+        <div class="form-row mb-15">
+          <div class="form-group m-0">
+            <label class="form-label">Horas * <span class="label-hint">(máx. 10)</span></label>
             <input type="number" class="form-input" id="reg-horas" min="0.25" max="10" step="0.25" placeholder="0.00" oninput="validarHoras(this)">
             <div class="form-error" id="reg-horas-error">⚠ El máximo permitido es 10 horas por registro</div>
             <div class="form-hint" id="reg-horas-hint">Mín. 0.25 · Máx. 10</div>
           </div>
-          <div class="form-group" style="margin:0;">
+          <div class="form-group m-0">
             <label class="form-label">Hora inicio (opcional)</label>
             <input type="time" class="form-input" id="reg-inicio">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Descripción / Notas <span style="color:var(--muted);font-weight:400;">(máx. 140)</span></label>
+          <label class="form-label">Descripción / Notas <span class="label-hint">(máx. 140)</span></label>
           <textarea class="form-textarea" id="reg-notas" maxlength="140" placeholder="Detalle del trabajo realizado…" oninput="actualizarContador()"></textarea>
           <div class="char-counter" id="notas-counter">0/140</div>
         </div>
-        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px;">
+        <div class="form-actions">
           <button class="btn btn-ghost" onclick="limpiarFormRegistro()">Limpiar</button>
           <button class="btn btn-primary" onclick="guardarRegistro()">✓ Guardar registro</button>
         </div>
@@ -380,20 +234,20 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
   <div class="content">
     <div class="toolbar">
       <input type="text" class="search-input" id="horas-search" placeholder="Buscar…" oninput="renderHoras()">
-      <select class="form-select" style="width:150px;" id="horas-filtro-tipo" onchange="renderHoras()">
+      <select class="form-select w-150" id="horas-filtro-tipo" onchange="renderHoras()">
         <option value="">Todos los tipos</option>
         <option value="encargo">Trabajos auditoría</option>
         <option value="otro">Otros trabajos</option>
         <option value="tarea">Tareas generales</option>
       </select>
-      <select class="form-select" style="width:150px;" id="horas-filtro-auditor" onchange="renderHoras()">
+      <select class="form-select w-150" id="horas-filtro-auditor" onchange="renderHoras()">
         <option value="">Todos los auditores</option>
       </select>
-      <select class="form-select" style="width:160px;" id="horas-filtro-plan" onchange="renderHoras()">
+      <select class="form-select w-160" id="horas-filtro-plan" onchange="renderHoras()">
         <option value="">Todos los planes</option>
       </select>
-      <input type="date" class="form-input" style="width:145px;" id="horas-fecha-ini" onchange="renderHoras()" placeholder="Desde">
-      <input type="date" class="form-input" style="width:145px;" id="horas-fecha-fin" onchange="renderHoras()" placeholder="Hasta">
+      <input type="date" class="form-input w-145" id="horas-fecha-ini" onchange="renderHoras()">
+      <input type="date" class="form-input w-145" id="horas-fecha-fin" onchange="renderHoras()">
     </div>
     <div class="table-card">
       <div class="table-header">
@@ -420,16 +274,16 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
   <div class="content">
     <div class="toolbar">
       <input type="text" class="search-input" id="encargos-search" placeholder="Buscar sociedad o trabajo…" oninput="renderEncargos()">
-      <select class="form-select" style="width:150px;" id="encargos-filtro-tipo" onchange="renderEncargos()">
+      <select class="form-select w-150" id="encargos-filtro-tipo" onchange="renderEncargos()">
         <option value="">Todos los tipos</option>
         <option value="Aseguramiento">Aseguramiento</option>
         <option value="Consultoría">Consultoría</option>
         <option value="Auditoría Continua">Auditoría Continua</option>
       </select>
-      <select class="form-select" style="width:160px;" id="encargos-filtro-plan" onchange="renderEncargos()">
+      <select class="form-select w-160" id="encargos-filtro-plan" onchange="renderEncargos()">
         <option value="">Todos los planes</option>
       </select>
-      <select class="form-select" style="width:140px;" id="encargos-filtro-estado" onchange="renderEncargos()">
+      <select class="form-select w-140" id="encargos-filtro-estado" onchange="renderEncargos()">
         <option value="">Todos los estados</option>
         <option value="Activo">Activo</option>
         <option value="Finalizado">Finalizado</option>
@@ -490,10 +344,10 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
       <div class="tab" onclick="switchReporte('otros',this)">Otros trabajos</div>
     </div>
     <div class="report-filters">
-      <input type="date" class="form-input" style="width:160px;" id="rep-fecha-ini" placeholder="Fecha inicio">
-      <span style="color:var(--muted);font-size:13px;">→</span>
-      <input type="date" class="form-input" style="width:160px;" id="rep-fecha-fin" placeholder="Fecha fin">
-      <select class="form-select" style="width:170px;" id="rep-plan-filtro">
+      <input type="date" class="form-input w-160" id="rep-fecha-ini">
+      <span class="arrow">→</span>
+      <input type="date" class="form-input w-160" id="rep-fecha-fin">
+      <select class="form-select w-170" id="rep-plan-filtro">
         <option value="">Todos los planes</option>
       </select>
       <button class="btn btn-ghost btn-sm" onclick="renderReporteActual()">Aplicar</button>
@@ -508,7 +362,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
         <div class="empty" id="rep-enc-empty"><div class="empty-text">Sin datos para este período</div></div>
       </div>
     </div>
-    <div id="rep-auditores" style="display:none;">
+    <div id="rep-auditores" class="hidden">
       <div class="table-card">
         <div class="table-header"><div class="table-title">Horas por auditor</div></div>
         <table>
@@ -518,7 +372,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
         <div class="empty" id="rep-aud-empty"><div class="empty-text">Sin datos para este período</div></div>
       </div>
     </div>
-    <div id="rep-tareas" style="display:none;">
+    <div id="rep-tareas" class="hidden">
       <div class="table-card">
         <div class="table-header"><div class="table-title">Horas por tipo de tarea general</div></div>
         <table>
@@ -528,7 +382,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
         <div class="empty" id="rep-tar-empty"><div class="empty-text">Sin registros de tareas generales</div></div>
       </div>
     </div>
-    <div id="rep-otros" style="display:none;">
+    <div id="rep-otros" class="hidden">
       <div class="table-card">
         <div class="table-header"><div class="table-title">Horas por otros trabajos</div></div>
         <table>
@@ -605,8 +459,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
     </div>
     <div class="form-group">
       <label class="form-label">Auditores asignados</label>
-      <div id="enc-auditores-list" style="display:flex;flex-wrap:wrap;gap:8px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;min-height:42px;">
-      </div>
+      <div id="enc-auditores-list" class="auditores-list"></div>
       <div class="form-hint">Selecciona los auditores asignados a este trabajo</div>
     </div>
     <div class="modal-actions">
@@ -615,6 +468,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
     </div>
   </div>
 </div>
+
 <!-- ===== MODAL OTRO TRABAJO ===== -->
 <div class="modal-overlay" id="modal-otro">
   <div class="modal modal-sm">
@@ -635,7 +489,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
     </div>
     <div class="form-group">
       <label class="form-label">Descripción</label>
-      <textarea class="form-textarea" id="otro-desc" placeholder="Descripción breve…" style="min-height:60px;"></textarea>
+      <textarea class="form-textarea" id="otro-desc" placeholder="Descripción breve…"></textarea>
     </div>
     <div class="form-group">
       <label class="form-label">Presupuesto de horas (opcional)</label>
@@ -644,8 +498,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
     </div>
     <div class="form-group">
       <label class="form-label">Auditores asignados</label>
-      <div id="otro-auditores-list" style="display:flex;flex-wrap:wrap;gap:8px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;min-height:42px;">
-      </div>
+      <div id="otro-auditores-list" class="auditores-list"></div>
       <div class="form-hint">Selecciona los auditores asignados a este trabajo</div>
     </div>
     <div class="modal-actions">
@@ -655,7 +508,7 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
   </div>
 </div>
 
-<!-- ===== MODAL DESGLOSE FASES ===== -->
+<!-- ===== MODAL DESGLOSE ===== -->
 <div class="modal-overlay" id="modal-desglose">
   <div class="modal modal-sm">
     <div class="modal-title" id="desglose-titulo">Cotejo de presupuesto</div>
@@ -705,887 +558,16 @@ tbody td{padding:11px 16px;font-size:13px;color:var(--text);}
 
 <div class="toast" id="toast"><span id="toast-icon">✓</span><span id="toast-msg">Guardado</span></div>
 
-<script>
-// ========== SUPABASE CONFIG ==========
-const SUPABASE_URL = 'https://lktucbibgebxxhrihazj.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrdHVjYmliZ2VieHhocmloYXpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzNTMzMjQsImV4cCI6MjA4ODkyOTMyNH0.-GPhVPoawI8VM0JF1ZRsL28GwOuRWoV8R9vynDj3qiM';
-
-const SB = {
-  async get(tabla) {
-    const r=await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?select=*&order=created_at.desc`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
-    return r.ok?r.json():[];
-  },
-  async insert(tabla,data) {
-    const r=await fetch(`${SUPABASE_URL}/rest/v1/${tabla}`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)});
-    return r.ok?r.json():null;
-  },
-  async update(tabla,id,data) {
-    const r=await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?id=eq.${id}`,{method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(data)});
-    return r.ok?r.json():null;
-  },
-  async delete(tabla,id) {
-    const r=await fetch(`${SUPABASE_URL}/rest/v1/${tabla}?id=eq.${id}`,{method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`}});
-    return r.ok;
-  }
-};
-const SB_LISTO=SUPABASE_URL!=='PEGA_AQUI_TU_PROJECT_URL';
-
-// ========== PLANES (Jul-Jun) ==========
-function getPlanActivo() {
-  const now=new Date();
-  const y=now.getFullYear();
-  const m=now.getMonth()+1;
-  return m>=7?`${y}-${y+1}`:`${y-1}-${y}`;
-}
-function generarPlanes(n=10) {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = now.getMonth() + 1;
-  const base = m >= 7 ? y : y - 1;
-  const planes = [];
-  for(let i = -(n-3); i <= 3; i++) {
-    planes.push(`${base+i}-${base+i+1}`);
-  }
-  return planes;
-}
-function llenarSelectPlanes(selId,incluirTodos=false) {
-  const sel=document.getElementById(selId);
-  if(!sel)return;
-  const prev=sel.value;
-  sel.innerHTML='';
-  if(incluirTodos){const o=document.createElement('option');o.value='';o.textContent='Todos los planes';sel.appendChild(o);}
-  const activo=getPlanActivo();
-  generarPlanes().forEach(p=>{
-    const o=document.createElement('option');
-    o.value=p;
-    o.textContent=`Plan ${p}${p===activo?' (activo)':''}`;
-    sel.appendChild(o);
-  });
-  if(prev) sel.value=prev;
-  else if(!incluirTodos) sel.value=activo;
-}
-
-// ========== DATA ==========
-const SUBTAREAS={
-  'COLABORACIÓN':['Auditoría externa','Interdepartamental','Organismos externos'],
-  'FORMACIÓN':['Interna','Externa'],
-  'SEGUIMIENTO A RECOMENDACIONES':['--'],
-  'COORDINACIÓN Y SUPERVISIÓN':['Reunión entre auditores','Plan Anual de Auditoría','Soporte a Accionistas','Transición a MIPP'],
-  'OTRAS ACTIVIDADES':['Relacionadas con Auditoría Interna','No relacionadas con Auditoría Interna','Trabajo administrativo y de archivo','OKR Organización o de Equipo','Decomiso','Inventarios (No trabajos de auditoría)','Calibración equipos','Participación tareas Ganadera'],
-  'AUSENCIAS JUSTIFICADAS':['--'],
-  'FESTIVOS Y VACACIONES':['--']
-};
-let db={auditores:[],encargos:[],registros:[],otros:[]};
-let editEncId=null,editAudId=null,editOtroId=null;
-let currentTipo='encargo',currentReporte='encargos';
-function toArray(val){
-  if(!val) return [];
-  if(Array.isArray(val)) return val;
-  if(typeof val==='string'){
-    try{ return JSON.parse(val); }catch(e){ return []; }
-  }
-  return [];
-}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-function saveLocal(key){localStorage.setItem('at_'+key,JSON.stringify(db[key]));}
-
-async function cargarDatos(){
-  if(SB_LISTO){
-    showToast('Cargando datos…','⟳');
-    try{
-      const [auditores,encargos,registros,otros]=await Promise.all([SB.get('auditores'),SB.get('encargos'),SB.get('registros'),SB.get('otros_trabajos')]);
-      db.auditores=auditores||[];db.encargos=encargos||[];db.registros=registros||[];db.otros=otros||[];
-      showToast('Datos cargados','✓');
-    }catch(e){showToast('Error al cargar datos','⚠');}
-  }else{
-    db.auditores=JSON.parse(localStorage.getItem('at_auditores')||'[]');
-    db.encargos=JSON.parse(localStorage.getItem('at_encargos')||'[]');
-    db.registros=JSON.parse(localStorage.getItem('at_registros')||'[]');
-    db.otros=JSON.parse(localStorage.getItem('at_otros')||'[]');
-  }
-}
-
-// ========== VALIDACIONES ==========
-function validarHoras(input){
-  const v=parseFloat(input.value);
-  const err=document.getElementById('reg-horas-error');
-  const hint=document.getElementById('reg-horas-hint');
-  if(v>10){
-    input.classList.add('error');
-    err.style.display='block';
-    hint.style.display='none';
-  }else{
-    input.classList.remove('error');
-    err.style.display='none';
-    hint.style.display='block';
-  }
-}
-
-function actualizarContador(){
-  const ta=document.getElementById('reg-notas');
-  const c=document.getElementById('notas-counter');
-  const len=ta.value.length;
-  c.textContent=`${len}/140`;
-  c.className='char-counter'+(len>120?' warn':'')+(len>=140?' over':'');
-}
-
-// ========== NAVIGATION ==========
-function showView(name){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('view-'+name).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+name+"'"))n.classList.add('active');});
-  if(name==='dashboard')renderDashboard();
-  if(name==='horas')renderHoras();
-  if(name==='encargos')renderEncargos();
-  if(name==='otros')renderOtros();
-  if(name==='equipo')renderEquipo();
-  if(name==='reportes')renderReporteActual();
-  if(name==='registro')initRegistro();
-}
-
-// ========== TIPO SELECTOR ==========
-function selectTipo(tipo){
-  currentTipo=tipo;
-  ['encargo','otro','tarea'].forEach(t=>{
-    document.getElementById('tipo-'+t+'-card').classList.toggle('selected',t===tipo);
-    document.getElementById('campos-'+t).style.display=t===tipo?'':'none';
-  });
-}
-
-function updateSubtareas(){
-  const tarea=document.getElementById('reg-tarea').value;
-  const sel=document.getElementById('reg-subtarea');
-  sel.innerHTML='';
-  (SUBTAREAS[tarea]||['--']).forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o);});
-}
-
-function initRegistro(){
-  const fi=document.getElementById('reg-fecha');
-  if(!fi.value)fi.value=new Date().toISOString().split('T')[0];
-  updateAuditorSelect('reg-auditor');
-  updateEncargoSelect();
-  updateOtroSelect();
-}
-
-function updateAuditorSelect(id){
-  const sel=document.getElementById(id);if(!sel)return;
-  const prev=sel.value;
-  sel.innerHTML='<option value="">— seleccionar —</option>';
-  db.auditores.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.nombre+' ('+a.rol+')';sel.appendChild(o);});
-  if(prev)sel.value=prev;
-}
-
-function updateEncargoSelect(){
-  const sel=document.getElementById('reg-encargo');
-  const prev=sel.value;
-  sel.innerHTML='<option value="">— seleccionar trabajo —</option>';
-  db.encargos.filter(e=>e.estado==='Activo').forEach(e=>{const o=document.createElement('option');o.value=e.id;o.textContent=e.cliente+' — '+e.nombre;sel.appendChild(o);});
-  if(prev)sel.value=prev;
-}
-
-function updateOtroSelect(){
-  const sel=document.getElementById('reg-otro');
-  const prev=sel.value;
-  sel.innerHTML='<option value="">— seleccionar —</option>';
-  db.otros.forEach(o=>{const op=document.createElement('option');op.value=o.id;op.textContent=o.nombre;sel.appendChild(op);});
-  if(prev)sel.value=prev;
-}
-
-// ========== GUARDAR REGISTRO ==========
-async function guardarRegistro(){
-  const fecha=document.getElementById('reg-fecha').value;
-  const auditorId=document.getElementById('reg-auditor').value;
-  const horas=parseFloat(document.getElementById('reg-horas').value);
-  const notas=document.getElementById('reg-notas').value.trim();
-  const inicio=document.getElementById('reg-inicio').value;
-  if(!fecha||!auditorId||!horas||horas<=0){showToast('Completa los campos obligatorios','⚠');return;}
-  if(horas>10){showToast('El máximo es 10 horas por registro','⚠');return;}
-  const reg={id:uid(),fecha,auditor_id:auditorId,tipo:currentTipo,horas,notas,inicio};
-  if(currentTipo==='encargo'){
-    const encargoId=document.getElementById('reg-encargo').value;
-    if(!encargoId){showToast('Selecciona un trabajo','⚠');return;}
-    reg.encargo_id=encargoId;
-    reg.fase=document.getElementById('reg-fase').value;
-  }else if(currentTipo==='otro'){
-    const otroId=document.getElementById('reg-otro').value;
-    if(!otroId){showToast('Selecciona un trabajo','⚠');return;}
-    reg.otro_id=otroId;
-  }else{
-    const tarea=document.getElementById('reg-tarea').value;
-    if(!tarea){showToast('Selecciona una tarea','⚠');return;}
-    reg.tarea=tarea;
-    reg.subtarea=document.getElementById('reg-subtarea').value;
-  }
-  if(SB_LISTO){const saved=await SB.insert('registros',reg);if(!saved){showToast('Error al guardar','⚠');return;}db.registros.unshift(reg);}
-  else{db.registros.unshift(reg);saveLocal('registros');}
-  limpiarFormRegistro();
-  showToast('Registro guardado','✓');
-}
-
-function limpiarFormRegistro(){
-  document.getElementById('reg-horas').value='';
-  document.getElementById('reg-notas').value='';
-  document.getElementById('reg-inicio').value='';
-  document.getElementById('reg-tarea').value='';
-  document.getElementById('reg-encargo').value='';
-  document.getElementById('reg-otro').value='';
-  document.getElementById('reg-subtarea').innerHTML='<option value="--">—</option>';
-  document.getElementById('notas-counter').textContent='0/140';
-  document.getElementById('reg-horas-error').style.display='none';
-  document.getElementById('reg-horas').classList.remove('error');
-}
-
-// ========== DASHBOARD ==========
-function renderDashboard(){
-  const now=new Date();
-  const planActivo=getPlanActivo();
-  document.getElementById('dash-date').textContent=now.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('dash-plan-badge').textContent=`Plan ${planActivo}`;
-  document.getElementById('encargos-plan-sub').textContent=`Plan activo: ${planActivo}`;
-  const mes=now.toISOString().slice(0,7);
-  const regMes=db.registros.filter(r=>r.fecha&&r.fecha.startsWith(mes));
-  const totalH=regMes.reduce((s,r)=>s+r.horas,0);
-  const hEnc=regMes.filter(r=>r.tipo==='encargo').reduce((s,r)=>s+r.horas,0);
-  const hOtra=regMes.filter(r=>r.tipo==='tarea'||r.tipo==='otro').reduce((s,r)=>s+r.horas,0);
-  const activos=db.encargos.filter(e=>e.estado==='Activo').length;
-  document.getElementById('kpi-mes').textContent=totalH.toFixed(1);
-  document.getElementById('kpi-mes-delta').textContent=db.registros.length+' registros totales';
-  document.getElementById('kpi-encargos').textContent=hEnc.toFixed(1);
-  document.getElementById('kpi-encargos-delta').textContent=activos+' trabajos activos';
-  document.getElementById('kpi-otras').textContent=hOtra.toFixed(1);
-  document.getElementById('kpi-equipo').textContent=db.auditores.length;
-  // KPI Plan
-  const encPlan=db.encargos.filter(e=>e.plan===planActivo);
-  const encFin=encPlan.filter(e=>e.estado==='Finalizado').length;
-  const pctPlan=encPlan.length>0?Math.round(encFin/encPlan.length*100):0;
-  document.getElementById('kpi-plan-pct').textContent=pctPlan+'%';
-  document.getElementById('kpi-plan-detalle').textContent=`${encFin}/${encPlan.length} trabajos finalizados`;
-
-  // Recent
-  const recent=[...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,6);
-  const tbody=document.getElementById('dash-recent');
-  document.getElementById('dash-recent-empty').style.display=recent.length?'none':'block';
-  tbody.innerHTML='';
-  recent.forEach(r=>{
-    const aud=db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId));
-    let desc='';
-    if(r.tipo==='encargo') desc=(db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:'?'}).nombre+(r.fase?' · '+r.fase:'');
-    else if(r.tipo==='otro') desc=(db.otros.find(o=>o.id===r.otro_id)||{nombre:'?'}).nombre+' · Otro trabajo';
-    else desc=(r.tarea||'?')+(r.subtarea&&r.subtarea!=='--'?' · '+r.subtarea:'');
-    tbody.innerHTML+=`<tr><td style="font-family:var(--mono);font-size:12px;">${r.fecha}</td><td>${aud?aud.nombre:'?'}</td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${desc}</td><td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${r.horas.toFixed(1)}h</td></tr>`;
-  });
-
-  // Encargos plan activo
-  const etbody=document.getElementById('dash-encargos');
-  const activosEnc=db.encargos.filter(e=>e.plan===planActivo&&e.estado==='Activo');
-  document.getElementById('dash-encargos-empty').style.display=activosEnc.length?'none':'block';
-  etbody.innerHTML='';
-  activosEnc.slice(0,5).forEach(e=>{
-    const exec=db.registros.filter(r=>(r.encargo_id||r.encargoId)===e.id).reduce((s,r)=>s+r.horas,0);
-    const pct=e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
-    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    etbody.innerHTML+=`<tr><td>${e.nombre}<br><span style="font-size:11px;color:var(--muted);">${e.cliente}</span></td><td style="font-family:var(--mono);">${exec.toFixed(1)}h${e.presupuesto>0?' / '+e.presupuesto+'h':''}</td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div></td></tr>`;
-  });
-
-  // Tareas generales mes
-  const tareasRegs=regMes.filter(r=>r.tipo==='tarea');
-  const ttbody=document.getElementById('dash-tareas');
-  document.getElementById('dash-tareas-empty').style.display=tareasRegs.length?'none':'block';
-  ttbody.innerHTML='';
-  const totalT=tareasRegs.reduce((s,r)=>s+r.horas,0);
-  const grouped={};
-  tareasRegs.forEach(r=>{const k=r.tarea+'|||'+(r.subtarea||'--');if(!grouped[k])grouped[k]={tarea:r.tarea,subtarea:r.subtarea||'--',horas:0};grouped[k].horas+=r.horas;});
-  Object.values(grouped).sort((a,b)=>b.horas-a.horas).forEach(g=>{
-    const pct=totalT>0?Math.round(g.horas/totalT*100):0;
-    ttbody.innerHTML+=`<tr><td style="font-weight:500;">${g.tarea}</td><td style="color:var(--muted);font-size:12px;">${g.subtarea==='--'?'—':g.subtarea}</td><td style="font-family:var(--mono);">${g.horas.toFixed(1)}h</td><td><div class="prog-wrap"><div class="prog-bar" style="min-width:60px;"><div class="prog-fill" style="width:${pct}%;background:var(--teal);"></div></div><span class="prog-pct">${pct}%</span></div></td></tr>`;
-  });
-}
-
-// ========== HORAS ==========
-function renderHoras(){
-  const search=document.getElementById('horas-search').value.toLowerCase();
-  const filtroTipo=document.getElementById('horas-filtro-tipo').value;
-  const filtroAud=document.getElementById('horas-filtro-auditor').value;
-  const filtroPlan=document.getElementById('horas-filtro-plan').value;
-  const fechaIni=document.getElementById('horas-fecha-ini').value;
-  const fechaFin=document.getElementById('horas-fecha-fin').value;
-  updateAuditorSelect('horas-filtro-auditor');
-  if(filtroAud)document.getElementById('horas-filtro-auditor').value=filtroAud;
-  llenarSelectPlanes('horas-filtro-plan',true);
-  if(filtroPlan)document.getElementById('horas-filtro-plan').value=filtroPlan;
-
-  let regs=[...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha));
-  if(filtroTipo)regs=regs.filter(r=>r.tipo===filtroTipo);
-  if(filtroAud)regs=regs.filter(r=>(r.auditor_id||r.auditorId)===filtroAud);
-  if(fechaIni)regs=regs.filter(r=>r.fecha>=fechaIni);
-  if(fechaFin)regs=regs.filter(r=>r.fecha<=fechaFin);
-  if(filtroPlan)regs=regs.filter(r=>{
-    const enc=db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId));
-    return enc&&enc.plan===filtroPlan;
-  });
-  if(search)regs=regs.filter(r=>{
-    const aud=(db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId))||{nombre:''}).nombre.toLowerCase();
-    const enc=(db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:''}).nombre.toLowerCase();
-    return aud.includes(search)||enc.includes(search)||(r.tarea||'').toLowerCase().includes(search)||(r.notas||'').toLowerCase().includes(search);
-  });
-
-  const tbody=document.getElementById('horas-tbody');
-  document.getElementById('horas-empty').style.display=regs.length?'none':'block';
-  document.getElementById('horas-count').textContent=regs.length+' registros';
-  tbody.innerHTML='';
-  regs.forEach(r=>{
-    const aud=db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId))||{nombre:'?'};
-    let tipoHtml='',tareaHtml='',subHtml='';
-    if(r.tipo==='encargo'){
-      tipoHtml='<span class="badge badge-green">Trabajo</span>';
-      const enc=db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:'?',cliente:''};
-      tareaHtml=`<span style="font-weight:500;">${enc.nombre}</span><br><span style="font-size:11px;color:var(--muted);">${enc.cliente}</span>`;
-      subHtml=`<span class="badge badge-muted">${r.fase||'—'}</span>`;
-    }else if(r.tipo==='otro'){
-      tipoHtml='<span class="badge badge-orange">Otro trabajo</span>';
-      const otro=db.otros.find(o=>o.id===r.otro_id)||{nombre:'?'};
-      tareaHtml=`<span style="font-weight:500;">${otro.nombre}</span>`;
-      subHtml='—';
-    }else{
-      tipoHtml='<span class="badge badge-teal">Tarea</span>';
-      tareaHtml=`<span style="font-weight:500;">${r.tarea||'?'}</span>`;
-      subHtml=`<span style="font-size:12px;color:var(--muted);">${(!r.subtarea||r.subtarea==='--')?'—':r.subtarea}</span>`;
-    }
-    tbody.innerHTML+=`<tr>
-      <td style="font-family:var(--mono);font-size:12px;white-space:nowrap;">${r.fecha}</td>
-      <td><div style="display:flex;align-items:center;gap:7px;"><div class="avatar" style="width:26px;height:26px;font-size:10px;">${aud.nombre.slice(0,2).toUpperCase()}</div><span>${aud.nombre}</span></div></td>
-      <td>${tipoHtml}</td><td>${tareaHtml}</td><td>${subHtml}</td>
-      <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${r.horas.toFixed(1)}h</td>
-      <td style="max-width:150px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.notas||'—'}</td>
-      <td><button class="btn btn-danger btn-sm" onclick="eliminarRegistro('${r.id}')">✕</button></td>
-    </tr>`;
-  });
-}
-
-async function eliminarRegistro(id){
-  if(!confirm('¿Eliminar este registro?'))return;
-  if(SB_LISTO)await SB.delete('registros',id);
-  db.registros=db.registros.filter(r=>r.id!==id);
-  if(!SB_LISTO)saveLocal('registros');
-  renderHoras();showToast('Registro eliminado','✕');
-}
-
-// ========== ENCARGOS ==========
-function renderEncargos(){
-  llenarSelectPlanes('encargos-filtro-plan',true);
-  const search=document.getElementById('encargos-search').value.toLowerCase();
-  const filtroEstado=document.getElementById('encargos-filtro-estado').value;
-  const filtroTipo=document.getElementById('encargos-filtro-tipo').value;
-  const filtroPlan=document.getElementById('encargos-filtro-plan').value;
-  let encs=db.encargos.filter(e=>{
-    const match=(e.nombre+e.cliente).toLowerCase().includes(search);
-    const estado=filtroEstado?e.estado===filtroEstado:true;
-    const tipo=filtroTipo?e.tipo===filtroTipo:true;
-    const plan=filtroPlan?e.plan===filtroPlan:true;
-    return match&&estado&&tipo&&plan;
-  });
-  const grid=document.getElementById('encargos-grid');
-  document.getElementById('encargos-empty').style.display=encs.length?'none':'block';
-  grid.innerHTML='';
-  const tipoBadge={'Aseguramiento':'badge-blue','Consultoría':'badge-purple','Auditoría Continua':'badge-teal'};
-  const tipoClass={'Aseguramiento':'tipo-aseguramiento','Consultoría':'tipo-consultoria','Auditoría Continua':'tipo-continua'};
-  const planActivo=getPlanActivo();
-  encs.forEach(e=>{
-    const exec=db.registros.filter(r=>(r.encargo_id||r.encargoId)===e.id).reduce((s,r)=>s+r.horas,0);
-    const pct=e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
-    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    const bE=e.estado==='Activo'?'badge-green':e.estado==='Finalizado'?'badge-muted':'badge-amber';
-    const tc=tipoClass[e.tipo]||'';
-    const tb=tipoBadge[e.tipo]||'badge-muted';
-    const esPlanActivo=e.plan===planActivo;
-    grid.innerHTML+=`<div class="encargo-card ${tc}">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-        <div class="encargo-client">${e.cliente}</div>
-        <span class="badge ${tb}" style="margin-left:8px;">${e.tipo||'—'}</span>
-      </div>
-      <div class="encargo-name">${e.nombre}</div>
-      ${e.codigo?`<div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:6px;">Código: ${e.codigo}</div>`:''}
-      ${e.plan?`<div style="margin-bottom:8px;"><span class="plan-badge ${esPlanActivo?'activo':''}">Plan ${e.plan}${esPlanActivo?' ✓':''}</span></div>`:''}
-      <div class="encargo-stats">
-        <div>
-          <div class="encargo-hours-val">${exec.toFixed(1)}h</div>
-          <div class="encargo-budget-label">${e.presupuesto>0?'de '+e.presupuesto+'h presupuestadas':'Sin presupuesto'}</div>
-        </div>
-        <span class="badge ${bE}">${e.estado}</span>
-      </div>
-      ${e.presupuesto>0?`<div class="prog-wrap" style="margin-bottom:8px;"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:''}
-      ${e.inicio||e.fin?`<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${e.inicio||''}${e.fin?' → '+e.fin:''}</div>`:''}
-      ${toArray(e.auditores_ids).length>0?`
-      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
-        ${toArray(e.auditores_ids).map(aid=>{
-          const a=db.auditores.find(x=>x.id===aid);
-          return a?`<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:10px;background:rgba(22,163,74,0.08);color:var(--accent);border:1px solid rgba(22,163,74,0.2);">
-            <div style="width:14px;height:14px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>
-            ${a.nombre}</span>`:'';
-        }).join('')}
-      </div>`:''}
-      <div class="encargo-actions">
-        ${e.presupuesto>0?`<button class="btn btn-ghost btn-sm" onclick="verDesglose('${e.id}')">▤ Cotejo</button>`:''}
-        <button class="btn btn-ghost btn-sm" onclick="editarEncargo('${e.id}')">✎ Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="eliminarEncargo('${e.id}')">✕</button>
-      </div>
-    </div>`;
-  });
-}
-
-// ========== COTEJO DESGLOSE FASES ==========
-function verDesglose(encargoId){
-  const e=db.encargos.find(x=>x.id===encargoId);
-  if(!e)return;
-  const regsEnc=db.registros.filter(r=>(r.encargo_id||r.encargoId)===encargoId);
-  const fases=['Planificación','Trabajo de campo','Informe'];
-  const totalExec=regsEnc.reduce((s,r)=>s+r.horas,0);
-  document.getElementById('desglose-titulo').textContent=`Cotejo: ${e.nombre}`;
-  let html=`<div style="background:var(--bg3);border-radius:10px;padding:14px 16px;margin-bottom:16px;">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;">
-      <span style="font-size:12px;color:var(--muted);">Presupuesto total</span>
-      <span style="font-family:var(--mono);font-weight:600;font-size:18px;">${e.presupuesto}h</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;">
-      <span style="font-size:12px;color:var(--muted);">Total ejecutado</span>
-      <span style="font-family:var(--mono);font-weight:600;font-size:18px;color:var(--accent);">${totalExec.toFixed(1)}h</span>
-    </div>
-    <div style="margin-top:10px;">
-      <div class="prog-wrap">
-        <div class="prog-bar" style="height:8px;">
-          <div class="prog-fill" style="width:${Math.min(100,Math.round(totalExec/e.presupuesto*100))}%;background:${totalExec/e.presupuesto>=0.9?'var(--red)':totalExec/e.presupuesto>=0.7?'var(--amber)':'var(--green)'};"></div>
-        </div>
-        <span class="prog-pct">${Math.min(100,Math.round(totalExec/e.presupuesto*100))}%</span>
-      </div>
-    </div>
-  </div>
-  <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:var(--mono);margin-bottom:8px;">Desglose por fase</div>`;
-  fases.forEach(f=>{
-    const hFase=regsEnc.filter(r=>r.fase===f).reduce((s,r)=>s+r.horas,0);
-    const pct=e.presupuesto>0?Math.round(hFase/e.presupuesto*100):0;
-    html+=`<div class="fase-row">
-      <div><div class="fase-name">${f}</div><div class="fase-pct">${pct}% del presupuesto</div></div>
-      <div class="fase-val">${hFase.toFixed(1)}h</div>
-    </div>`;
-  });
-  const otrasFase=regsEnc.filter(r=>r.fase==='Revisión'||!fases.includes(r.fase)).reduce((s,r)=>s+r.horas,0);
-  if(otrasFase>0) html+=`<div class="fase-row"><div><div class="fase-name">Otras fases</div></div><div class="fase-val">${otrasFase.toFixed(1)}h</div></div>`;
-  html+=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;"><span style="font-size:12px;color:var(--muted);">Horas restantes</span><span style="font-family:var(--mono);font-weight:600;color:${Math.max(0,e.presupuesto-totalExec)===0?'var(--red)':'var(--text)'};">${Math.max(0,e.presupuesto-totalExec).toFixed(1)}h</span></div>`;
-  document.getElementById('desglose-content').innerHTML=html;
-  document.getElementById('modal-desglose').classList.add('open');
-}
-function renderAuditoresCheck(containerId, selectedIds=[]){
-  const container=document.getElementById(containerId);
-  if(!container)return;
-  container.innerHTML='';
-  if(db.auditores.length===0){
-    container.innerHTML='<span style="font-size:12px;color:var(--muted);">No hay auditores registrados</span>';
-    return;
-  }
-  db.auditores.forEach(a=>{
-    const isSelected=selectedIds.includes(a.id);
-    const chip=document.createElement('div');
-    chip.style.cssText=`display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:99px;cursor:pointer;font-size:12px;border:1px solid ${isSelected?'var(--accent)':'var(--border2)'};background:${isSelected?'rgba(22,163,74,0.08)':'var(--bg)'};color:${isSelected?'var(--accent)':'var(--muted2)'};transition:all 0.15s;`;
-    chip.innerHTML=`<div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#166534);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:#fff;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>${a.nombre}`;
-    chip.dataset.id=a.id;
-    chip.dataset.selected=isSelected?'1':'0';
-    chip.onclick=()=>{
-      const sel=chip.dataset.selected==='1';
-      chip.dataset.selected=sel?'0':'1';
-      chip.style.border=`1px solid ${!sel?'var(--accent)':'var(--border2)'}`;
-      chip.style.background=!sel?'rgba(22,163,74,0.08)':'var(--bg)';
-      chip.style.color=!sel?'var(--accent)':'var(--muted2)';
-    };
-    container.appendChild(chip);
-  });
-}
-
-function getSelectedAuditores(containerId){
-  const container=document.getElementById(containerId);
-  if(!container)return[];
-  return [...container.querySelectorAll('[data-selected="1"]')].map(c=>c.dataset.id);
-}
-function abrirModalEncargo(id){
-  editEncId=id||null;
-  llenarSelectPlanes('enc-plan');
-  document.getElementById('modal-enc-title').textContent=id?'Editar trabajo':'Nuevo trabajo de auditoría';
-  if(id){
-    const e=db.encargos.find(x=>x.id===id)||{};
-    document.getElementById('enc-cliente').value=e.cliente||'';
-    document.getElementById('enc-codigo').value=e.codigo||'';
-    document.getElementById('enc-nombre').value=e.nombre||'';
-    document.getElementById('enc-tipo').value=e.tipo||'Aseguramiento';
-    document.getElementById('enc-plan').value=e.plan||getPlanActivo();
-    document.getElementById('enc-presupuesto').value=e.presupuesto||'';
-    document.getElementById('enc-estado').value=e.estado||'Activo';
-    document.getElementById('enc-inicio').value=e.inicio||'';
-    document.getElementById('enc-fin').value=e.fin||'';
-    document.getElementById('enc-notas').value=e.notas||'';
-    renderAuditoresCheck('enc-auditores-list', toArray(e.auditores_ids));
-  }else{
-    ['enc-cliente','enc-codigo','enc-nombre','enc-presupuesto','enc-inicio','enc-fin','enc-notas'].forEach(i=>document.getElementById(i).value='');
-    document.getElementById('enc-estado').value='Activo';
-    document.getElementById('enc-tipo').value='Aseguramiento';
-    document.getElementById('enc-plan').value=getPlanActivo();
-    renderAuditoresCheck('enc-auditores-list',[]);
-  }
-  document.getElementById('modal-encargo').classList.add('open');
-}
-
-function editarEncargo(id){abrirModalEncargo(id);}
-
-async function guardarEncargo(){
-  const cliente=document.getElementById('enc-cliente').value.trim();
-  const nombre=document.getElementById('enc-nombre').value.trim();
-  if(!cliente||!nombre){showToast('Sociedad y nombre son obligatorios','⚠');return;}
-  const enc={
-    id:editEncId||uid(),cliente,nombre,
-    codigo:document.getElementById('enc-codigo').value.trim(),
-    tipo:document.getElementById('enc-tipo').value,
-    plan:document.getElementById('enc-plan').value,
-    presupuesto:parseFloat(document.getElementById('enc-presupuesto').value)||0,
-    estado:document.getElementById('enc-estado').value,
-    inicio:document.getElementById('enc-inicio').value,
-    fin:document.getElementById('enc-fin').value,
-    notas:document.getElementById('enc-notas').value,
-    auditores_ids:getSelectedAuditores('enc-auditores-list'),
-  };
-  if(SB_LISTO){
-    if(editEncId){await SB.update('encargos',editEncId,enc);db.encargos=db.encargos.map(e=>e.id===editEncId?enc:e);}
-    else{await SB.insert('encargos',enc);db.encargos.push(enc);}
-  }else{
-    if(editEncId)db.encargos=db.encargos.map(e=>e.id===editEncId?enc:e);
-    else db.encargos.push(enc);
-    saveLocal('encargos');
-  }
-  cerrarModal('modal-encargo');renderEncargos();
-  showToast(editEncId?'Trabajo actualizado':'Trabajo creado','✓');editEncId=null;
-}
-
-async function eliminarEncargo(id){
-  if(!confirm('¿Eliminar este trabajo?'))return;
-  if(SB_LISTO){await SB.delete('encargos',id);await Promise.all(db.registros.filter(r=>(r.encargo_id||r.encargoId)===id).map(r=>SB.delete('registros',r.id)));}
-  db.encargos=db.encargos.filter(e=>e.id!==id);
-  db.registros=db.registros.filter(r=>(r.encargo_id||r.encargoId)!==id);
-  if(!SB_LISTO){saveLocal('encargos');saveLocal('registros');}
-  renderEncargos();showToast('Trabajo eliminado','✕');
-}
-
-// ========== OTROS TRABAJOS ==========
-function renderOtros(){
-  const grid=document.getElementById('otros-grid');
-  document.getElementById('otros-empty').style.display=db.otros.length?'none':'block';
-  grid.innerHTML='';
-  db.otros.forEach(o=>{
-    const exec=db.registros.filter(r=>r.otro_id===o.id).reduce((s,r)=>s+r.horas,0);
-    const pct=o.presupuesto>0?Math.min(100,Math.round(exec/o.presupuesto*100)):0;
-    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    grid.innerHTML+=`<div class="encargo-card tipo-otro">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-        <div class="encargo-client">${o.sociedad||''}</div>
-        <span class="badge badge-orange">Otro trabajo</span>
-      </div>
-      <div class="encargo-name">${o.nombre}</div>
-      ${o.codigo?`<div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:6px;">Código: ${o.codigo}</div>`:''}
-      ${o.descripcion?`<div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.4;">${o.descripcion}</div>`:''}
-      <div class="encargo-stats">
-        <div>
-          <div class="encargo-hours-val">${exec.toFixed(1)}h</div>
-          <div class="encargo-budget-label">${o.presupuesto>0?'de '+o.presupuesto+'h presupuestadas':'Sin presupuesto'}</div>
-        </div>
-      </div>
-      ${o.presupuesto>0?`<div class="prog-wrap" style="margin-bottom:8px;"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:''}
-      ${toArray(o.auditores_ids).length>0?`
-      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
-        ${toArray(o.auditores_ids).map(aid=>{
-          const a=db.auditores.find(x=>x.id===aid);
-          return a?`<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:10px;background:rgba(22,163,74,0.08);color:var(--accent);border:1px solid rgba(22,163,74,0.2);">
-            <div style="width:14px;height:14px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>
-            ${a.nombre}</span>`:'';
-        }).join('')}
-      </div>`:''}
-      <div class="encargo-actions">
-        <button class="btn btn-ghost btn-sm" onclick="editarOtro('${o.id}')">✎ Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="eliminarOtro('${o.id}')">✕</button>
-      </div>
-    </div>`;
-  });
-}
-  
-function abrirModalOtro(id){
-  editOtroId=id||null;
-  document.getElementById('modal-otro-title').textContent=id?'Editar trabajo':'Nuevo otro trabajo';
-  if(id){
-    const o=db.otros.find(x=>x.id===id)||{};
-    document.getElementById('otro-nombre').value=o.nombre||'';
-    document.getElementById('otro-sociedad').value=o.sociedad||'';
-    document.getElementById('otro-codigo').value=o.codigo||'';
-    document.getElementById('otro-desc').value=o.descripcion||'';
-    document.getElementById('otro-presupuesto').value=o.presupuesto||'';
-    renderAuditoresCheck('otro-auditores-list', toArray(o.auditores_ids));
-  }else{
-    ['otro-nombre','otro-sociedad','otro-codigo','otro-desc','otro-presupuesto'].forEach(i=>document.getElementById(i).value='');
-    renderAuditoresCheck('otro-auditores-list',[]);
-  }
-  document.getElementById('modal-otro').classList.add('open');
-}
-function editarOtro(id){abrirModalOtro(id);}
-
-async function guardarOtro(){
-  const nombre=document.getElementById('otro-nombre').value.trim();
-  if(!nombre){showToast('El nombre es obligatorio','⚠');return;}
-  const o={
-    id:editOtroId||uid(),
-    nombre,
-    sociedad:document.getElementById('otro-sociedad').value.trim(),
-    codigo:document.getElementById('otro-codigo').value.trim(),
-    descripcion:document.getElementById('otro-desc').value.trim(),
-    presupuesto:parseFloat(document.getElementById('otro-presupuesto').value)||0,
-    auditores_ids:getSelectedAuditores('otro-auditores-list'),
-  };
-  if(SB_LISTO){
-    if(editOtroId){await SB.update('otros_trabajos',editOtroId,o);db.otros=db.otros.map(x=>x.id===editOtroId?o:x);}
-    else{await SB.insert('otros_trabajos',o);db.otros.push(o);}
-  }else{
-    if(editOtroId)db.otros=db.otros.map(x=>x.id===editOtroId?o:x);
-    else db.otros.push(o);
-    saveLocal('otros');
-  }
-  cerrarModal('modal-otro');renderOtros();
-  showToast(editOtroId?'Actualizado':'Trabajo creado','✓');editOtroId=null;
-}
-
-async function eliminarOtro(id){
-  if(!confirm('¿Eliminar este trabajo?'))return;
-  if(SB_LISTO)await SB.delete('otros_trabajos',id);
-  db.otros=db.otros.filter(o=>o.id!==id);
-  if(!SB_LISTO)saveLocal('otros');
-  renderOtros();showToast('Eliminado','✕');
-}
-
-// ========== EQUIPO ==========
-function renderEquipo(){
-  const tbody=document.getElementById('equipo-tbody');
-  document.getElementById('equipo-empty').style.display=db.auditores.length?'none':'block';
-  tbody.innerHTML='';
-  const mes=new Date().toISOString().slice(0,7);
-  db.auditores.forEach(a=>{
-    const totalH=db.registros.filter(r=>(r.auditor_id||r.auditorId)===a.id).reduce((s,r)=>s+r.horas,0);
-    const mesH=db.registros.filter(r=>(r.auditor_id||r.auditorId)===a.id&&r.fecha&&r.fecha.startsWith(mes)).reduce((s,r)=>s+r.horas,0);
-    const encIds=[...new Set(db.registros.filter(r=>(r.auditor_id||r.auditorId)===a.id&&r.tipo==='encargo').map(r=>r.encargo_id||r.encargoId))];
-    const activos=encIds.filter(id=>db.encargos.find(e=>e.id===id&&e.estado==='Activo')).length;
-    const rb=a.rol==='Director de Auditoría'?'badge-amber':a.rol==='Gerente'?'badge-blue':a.rol==='Senior'?'badge-teal':'badge-muted';
-    tbody.innerHTML+=`<tr>
-      <td><div style="display:flex;align-items:center;gap:9px;"><div class="avatar">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div><div><div style="font-weight:500;">${a.nombre}</div><div style="font-size:11px;color:var(--muted);">${a.email||''}</div></div></div></td>
-      <td><span class="badge ${rb}">${a.rol}</span></td>
-      <td style="font-family:var(--mono);">${mesH.toFixed(1)}h</td>
-      <td style="font-family:var(--mono);">${totalH.toFixed(1)}h</td>
-      <td style="font-family:var(--mono);">${activos}</td>
-      <td style="display:flex;gap:6px;">
-        <button class="btn btn-ghost btn-sm" onclick="editarAuditor('${a.id}')">✎</button>
-        <button class="btn btn-danger btn-sm" onclick="eliminarAuditor('${a.id}')">✕</button>
-      </td>
-    </tr>`;
-  });
-}
-
-function abrirModalAuditor(id){
-  editAudId=id||null;
-  document.getElementById('modal-aud-title').textContent=id?'Editar auditor':'Añadir auditor';
-  if(id){const a=db.auditores.find(x=>x.id===id)||{};document.getElementById('aud-nombre').value=a.nombre||'';document.getElementById('aud-iniciales').value=a.iniciales||'';document.getElementById('aud-rol').value=a.rol||'Asistente';document.getElementById('aud-email').value=a.email||'';}
-  else{['aud-nombre','aud-iniciales','aud-email'].forEach(i=>document.getElementById(i).value='');document.getElementById('aud-rol').value='Asistente';}
-  document.getElementById('modal-auditor').classList.add('open');
-}
-
-function editarAuditor(id){abrirModalAuditor(id);}
-
-async function guardarAuditor(){
-  const nombre=document.getElementById('aud-nombre').value.trim();
-  if(!nombre){showToast('El nombre es obligatorio','⚠');return;}
-  const aud={id:editAudId||uid(),nombre,iniciales:document.getElementById('aud-iniciales').value.trim()||nombre.slice(0,2).toUpperCase(),rol:document.getElementById('aud-rol').value,email:document.getElementById('aud-email').value.trim()};
-  if(SB_LISTO){if(editAudId){await SB.update('auditores',editAudId,aud);db.auditores=db.auditores.map(a=>a.id===editAudId?aud:a);}else{await SB.insert('auditores',aud);db.auditores.push(aud);}}
-  else{if(editAudId)db.auditores=db.auditores.map(a=>a.id===editAudId?aud:a);else db.auditores.push(aud);saveLocal('auditores');}
-  cerrarModal('modal-auditor');renderEquipo();updateSidebar();
-  showToast(editAudId?'Auditor actualizado':'Auditor añadido','✓');editAudId=null;
-}
-
-async function eliminarAuditor(id){
-  if(!confirm('¿Eliminar este auditor?'))return;
-  if(SB_LISTO)await SB.delete('auditores',id);
-  db.auditores=db.auditores.filter(a=>a.id!==id);
-  if(!SB_LISTO)saveLocal('auditores');
-  renderEquipo();updateSidebar();showToast('Auditor eliminado','✕');
-}
-
-function updateSidebar(){
-  if(db.auditores.length>0){const a=db.auditores[0];document.getElementById('sidebar-avatar').textContent=(a.iniciales||a.nombre.slice(0,2)).toUpperCase();document.getElementById('sidebar-name').textContent=a.nombre;document.getElementById('sidebar-role').textContent=a.rol;}
-}
-
-// ========== REPORTES ==========
-function switchReporte(name,el){
-  currentReporte=name;
-  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  ['encargos','auditores','tareas','otros'].forEach(n=>document.getElementById('rep-'+n).style.display=n===name?'':'none');
-  renderReporteActual();
-}
-
-function filtrarRegsPorRango(){
-  const ini=document.getElementById('rep-fecha-ini').value;
-  const fin=document.getElementById('rep-fecha-fin').value;
-  const plan=document.getElementById('rep-plan-filtro').value;
-  let regs=[...db.registros];
-  if(ini)regs=regs.filter(r=>r.fecha>=ini);
-  if(fin)regs=regs.filter(r=>r.fecha<=fin);
-  if(plan)regs=regs.filter(r=>{const enc=db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId));return enc&&enc.plan===plan;});
-  return regs;
-}
-
-function renderReporteActual(){
-  llenarSelectPlanes('rep-plan-filtro',true);
-  const regs=filtrarRegsPorRango();
-  if(currentReporte==='encargos')renderRepEncargos(regs);
-  if(currentReporte==='auditores')renderRepAuditores(regs);
-  if(currentReporte==='tareas')renderRepTareas(regs);
-  if(currentReporte==='otros')renderRepOtros(regs);
-}
-
-function renderRepEncargos(regs){
-  const tbody=document.getElementById('rep-enc-tbody');
-  const empty=document.getElementById('rep-enc-empty');
-  tbody.innerHTML='';
-  if(!db.encargos.length){empty.style.display='block';return;}
-  empty.style.display='none';
-  const planActivo=getPlanActivo();
-  const tipoBadge={'Aseguramiento':'badge-blue','Consultoría':'badge-purple','Auditoría Continua':'badge-teal'};
-  db.encargos.forEach(e=>{
-    const exec=regs.filter(r=>(r.encargo_id||r.encargoId)===e.id).reduce((s,r)=>s+r.horas,0);
-    const pct=e.presupuesto>0?Math.min(100,Math.round(exec/e.presupuesto*100)):0;
-    const rest=e.presupuesto>0?Math.max(0,e.presupuesto-exec):0;
-    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    const bE=e.estado==='Activo'?'badge-green':e.estado==='Finalizado'?'badge-muted':'badge-amber';
-    const bT=tipoBadge[e.tipo]||'badge-muted';
-    tbody.innerHTML+=`<tr>
-      <td>${e.cliente}</td><td style="font-weight:500;">${e.nombre}</td>
-      <td><span class="badge ${bT}">${e.tipo||'—'}</span></td>
-      <td><span class="plan-badge ${e.plan===planActivo?'activo':''}">${e.plan||'—'}</span></td>
-      <td style="font-family:var(--mono);font-size:12px;">${e.codigo||'—'}</td>
-      <td style="font-family:var(--mono);">${e.presupuesto||'—'}</td>
-      <td style="font-family:var(--mono);color:var(--accent);">${exec.toFixed(1)}</td>
-      <td style="font-family:var(--mono);">${e.presupuesto>0?rest.toFixed(1):'—'}</td>
-      <td>${e.presupuesto>0?`<div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:'—'}</td>
-      <td><span class="badge ${bE}">${e.estado}</span></td>
-    </tr>`;
-  });
-}
-
-function renderRepAuditores(regs){
-  const tbody=document.getElementById('rep-aud-tbody');
-  const empty=document.getElementById('rep-aud-empty');
-  tbody.innerHTML='';
-  if(!db.auditores.length){empty.style.display='block';return;}
-  empty.style.display='none';
-  db.auditores.forEach(a=>{
-    const myRegs=regs.filter(r=>(r.auditor_id||r.auditorId)===a.id);
-    const hEnc=myRegs.filter(r=>r.tipo==='encargo').reduce((s,r)=>s+r.horas,0);
-    const hOtro=myRegs.filter(r=>r.tipo==='otro').reduce((s,r)=>s+r.horas,0);
-    const hTar=myRegs.filter(r=>r.tipo==='tarea').reduce((s,r)=>s+r.horas,0);
-    const rb=a.rol==='Director de Auditoría'?'badge-amber':a.rol==='Gerente'?'badge-blue':a.rol==='Senior'?'badge-teal':'badge-muted';
-    tbody.innerHTML+=`<tr>
-      <td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar" style="width:26px;height:26px;font-size:10px;">${(a.iniciales||a.nombre.slice(0,2)).toUpperCase()}</div>${a.nombre}</div></td>
-      <td><span class="badge ${rb}">${a.rol}</span></td>
-      <td style="font-family:var(--mono);">${hEnc.toFixed(1)}</td>
-      <td style="font-family:var(--mono);">${hOtro.toFixed(1)}</td>
-      <td style="font-family:var(--mono);">${hTar.toFixed(1)}</td>
-      <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${(hEnc+hOtro+hTar).toFixed(1)}</td>
-      <td style="font-family:var(--mono);">${myRegs.length}</td>
-    </tr>`;
-  });
-}
-
-function renderRepTareas(regs){
-  const tbody=document.getElementById('rep-tar-tbody');
-  const empty=document.getElementById('rep-tar-empty');
-  const tarRegs=regs.filter(r=>r.tipo==='tarea');
-  tbody.innerHTML='';
-  if(!tarRegs.length){empty.style.display='block';return;}
-  empty.style.display='none';
-  const total=tarRegs.reduce((s,r)=>s+r.horas,0);
-  const grouped={};
-  tarRegs.forEach(r=>{const k=r.tarea+'|||'+(r.subtarea||'--');if(!grouped[k])grouped[k]={tarea:r.tarea,subtarea:r.subtarea||'--',horas:0,count:0};grouped[k].horas+=r.horas;grouped[k].count++;});
-  Object.values(grouped).sort((a,b)=>b.horas-a.horas).forEach(g=>{
-    const pct=total>0?Math.round(g.horas/total*100):0;
-    tbody.innerHTML+=`<tr><td style="font-weight:500;">${g.tarea}</td><td style="color:var(--muted);">${g.subtarea==='--'?'—':g.subtarea}</td><td style="font-family:var(--mono);color:var(--teal);">${g.horas.toFixed(1)}</td><td style="font-family:var(--mono);">${g.count}</td><td><div class="prog-wrap"><div class="prog-bar" style="min-width:60px;"><div class="prog-fill" style="width:${pct}%;background:var(--teal);"></div></div><span class="prog-pct">${pct}%</span></div></td></tr>`;
-  });
-}
-
-function renderRepOtros(regs){
-  const tbody=document.getElementById('rep-otros-tbody');
-  const empty=document.getElementById('rep-otros-empty');
-  tbody.innerHTML='';
-  if(!db.otros.length){empty.style.display='block';return;}
-  empty.style.display='none';
-  db.otros.forEach(o=>{
-    const exec=regs.filter(r=>r.otro_id===o.id).reduce((s,r)=>s+r.horas,0);
-    const pct=o.presupuesto>0?Math.min(100,Math.round(exec/o.presupuesto*100)):0;
-    const color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--green)';
-    tbody.innerHTML+=`<tr>
-      <td style="color:var(--muted);font-size:12px;">${o.sociedad||'—'}</td>
-      <td style="font-weight:500;">${o.nombre}</td>
-      <td style="font-family:var(--mono);font-size:12px;">${o.codigo||'—'}</td>
-      <td style="color:var(--muted);font-size:12px;">${o.descripcion||'—'}</td>
-      <td style="font-family:var(--mono);">${o.presupuesto||'—'}</td>
-      <td style="font-family:var(--mono);color:var(--accent);">${exec.toFixed(1)}</td>
-      <td>${o.presupuesto>0?`<div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>`:'—'}</td>
-    </tr>`;
-  });
-}
-
-// ========== EXPORT CSV ==========
-function exportarCSV(){
-  const headers=['ID','Fecha','Auditor','Tipo','Sociedad','Trabajo','Plan','Código','Tarea','Sub-tarea','Fase','Horas','Notas'];
-  const rows=db.registros.map(r=>{
-    const aud=(db.auditores.find(a=>a.id===(r.auditor_id||r.auditorId))||{nombre:''}).nombre;
-    const enc=r.tipo==='encargo'?(db.encargos.find(e=>e.id===(r.encargo_id||r.encargoId))||{nombre:'',cliente:'',codigo:'',plan:''}):null;
-    const otro=r.tipo==='otro'?(db.otros.find(o=>o.id===r.otro_id)||{nombre:''}):null;
-    return [r.id,r.fecha,aud,r.tipo,enc?enc.cliente:'',enc?enc.nombre:otro?otro.nombre:'',enc?enc.plan||'':'',enc?enc.codigo||'':'',r.tarea||'',r.subtarea||'',r.fase||'',r.horas,(r.notas||'').replace(/"/g,'""')].map(v=>`"${v}"`).join(',');
-  });
-  const csv=[headers.join(','),...rows].join('\n');
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='auditronic_'+new Date().toISOString().slice(0,10)+'.csv';
-  a.click();URL.revokeObjectURL(url);
-  showToast('CSV exportado','↓');
-}
-
-// ========== MODALS ==========
-function cerrarModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
-
-// ========== TOAST ==========
-function showToast(msg,icon='✓'){
-  const t=document.getElementById('toast');
-  document.getElementById('toast-msg').textContent=msg;
-  document.getElementById('toast-icon').textContent=icon;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
-}
-
-// ========== INIT ==========
-async function init(){
-  const now=new Date();
-  document.getElementById('reg-fecha').value=now.toISOString().split('T')[0];
-  await cargarDatos();
-  updateAuditorSelect('horas-filtro-auditor');
-  llenarSelectPlanes('horas-filtro-plan',true);
-  llenarSelectPlanes('rep-plan-filtro',true);
-  llenarSelectPlanes('encargos-filtro-plan',true);
-  updateSidebar();
-  renderDashboard();
-  if(!SB_LISTO)showToast('Modo local — configura Supabase para compartir datos','⚠');
-}
-init();
-</script>
+<!-- SCRIPTS -->
+<script src="js/config.js"></script>
+<script src="js/helpers.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/registros.js"></script>
+<script src="js/trabajos.js"></script>
+<script src="js/otros.js"></script>
+<script src="js/equipo.js"></script>
+<script src="js/reportes.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
