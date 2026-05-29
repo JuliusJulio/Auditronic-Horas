@@ -184,10 +184,15 @@ async function eliminarRegistro(id) {
 
 // ========== EXPORT CSV (PUNTO 1: solo registros filtrados) ==========
 function exportarCSV() {
-  // Si estamos en vista "horas", exportar solo filtrados; si no, todos
-  const regsToExport = (document.getElementById('view-horas').classList.contains('active') && _filteredRegs.length >= 0)
-    ? _filteredRegs
-    : db.registros;
+  // Determinar qué registros exportar según la vista activa
+  let regsToExport;
+  if (document.getElementById('view-horas').classList.contains('active')) {
+    regsToExport = _filteredRegs;
+  } else if (document.getElementById('view-reportes').classList.contains('active')) {
+    regsToExport = filtrarRegsPorRango();
+  } else {
+    regsToExport = db.registros;
+  }
 
   const headers = ['ID', 'Fecha', 'Auditor', 'Tipo', 'Sociedad', 'Trabajo', 'Plan', 'Código', 'Tarea', 'Sub-tarea', 'Fase', 'Horas', 'Notas'];
   const rows = regsToExport.map(r => {
