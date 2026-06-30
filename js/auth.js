@@ -50,3 +50,23 @@ function getUserEmail() {
   const s = getSession();
   return s && s.user ? s.user.email : null;
 }
+
+// ========== INACTIVITY TIMEOUT ==========
+const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 min en ms
+
+function marcarActividad() {
+  localStorage.setItem('at_last_activity', Date.now());
+}
+
+function iniciarVigilanteInactividad() {
+  marcarActividad();
+  ['click', 'keydown', 'mousemove'].forEach(ev =>
+    document.addEventListener(ev, marcarActividad)
+  );
+  setInterval(() => {
+    const last = parseInt(localStorage.getItem('at_last_activity') || '0');
+    if (Date.now() - last > INACTIVITY_LIMIT) {
+      signOut();
+    }
+  }, 60 * 1000); // revisa cada minuto
+}
