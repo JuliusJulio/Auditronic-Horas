@@ -18,12 +18,15 @@ function showView(name) {
 
 // ========== INIT ==========
 async function init() {
-  // Verificar sesión antes de cargar la app
   if (SB_LISTO && !getSession()) {
     window.location.href = 'login.html';
     return;
-}
-iniciarVigilanteInactividad();
+  }
+  iniciarVigilanteInactividad();
+
+  // ... resto del código que ya tenías (cargarDatos, renderDashboard, etc.)
+
+} // <- esta es la llave que cierra init()
   // Mostrar email del usuario en el sidebar
   const emailEl = document.getElementById('sidebar-email');
   if (emailEl) emailEl.textContent = getUserEmail() || '';
