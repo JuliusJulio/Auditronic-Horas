@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditronic — Iniciar sesión</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,var(--bg) 0%,var(--bg3) 100%);}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px 32px;width:100%;max-width:380px;box-shadow:0 12px 40px rgba(22,101,52,0.1);}
+.login-logo{text-align:center;margin-bottom:24px;}
+.login-logo .logo-mark{font-family:var(--serif);font-size:28px;color:var(--text);}
+.login-logo .logo-mark span{color:var(--accent);}
+.login-logo .logo-sub{font-size:10px;color:var(--muted);letter-spacing:1.8px;text-transform:uppercase;margin-top:4px;font-family:var(--mono);}
+.login-title{font-family:var(--serif);font-size:20px;text-align:center;margin-bottom:6px;color:var(--text);}
+.login-sub{text-align:center;font-size:12px;color:var(--muted);margin-bottom:24px;}
+.login-error{display:none;background:rgba(220,38,38,0.07);border:1px solid rgba(220,38,38,0.2);color:var(--red);padding:10px 12px;border-radius:8px;font-size:12px;margin-bottom:14px;}
+.login-error.show{display:block;}
+.btn-login{width:100%;padding:11px;margin-top:8px;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="login-card">
+  <div class="login-logo">
+    <div class="logo-mark">Audit<span>ronic</span></div>
+    <div class="logo-sub">Gestión de tiempo · Auditoría</div>
+  </div>
+  <div class="login-title">Iniciar sesión</div>
+  <div class="login-sub">Accede con tus credenciales</div>
+  <div class="login-error" id="login-error"></div>
+  <div class="form-group">
+    <label class="form-label">Correo electrónico</label>
+    <input type="email" class="form-input" id="login-email" placeholder="tu@empresa.com" autocomplete="email">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Contraseña</label>
+    <input type="password" class="form-input" id="login-password" placeholder="••••••••" autocomplete="current-password">
+  </div>
+  <button class="btn btn-primary btn-login" id="login-btn" onclick="doLogin()">Entrar</button>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+// Si ya hay sesión, ir directo a la app
+if (getSession()) window.location.href = 'index.html';
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errBox = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  errBox.classList.remove('show');
+  if (!email || !password) {
+    errBox.textContent = 'Completa email y contraseña';
+    errBox.classList.add('show');
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Verificando…';
+  const result = await signIn(email, password);
+  if (result.error) {
+    errBox.textContent = result.error;
+    errBox.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+    return;
+  }
+  window.location.href = 'index.html';
+}
+
+document.getElementById('login-password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>
