@@ -22,7 +22,8 @@ async function init() {
   if (SB_LISTO && !getSession()) {
     window.location.href = 'login.html';
     return;
-  }
+}
+iniciarVigilanteInactividad();
   // Mostrar email del usuario en el sidebar
   const emailEl = document.getElementById('sidebar-email');
   if (emailEl) emailEl.textContent = getUserEmail() || '';
