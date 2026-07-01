@@ -23,14 +23,9 @@ async function init() {
     return;
   }
   iniciarVigilanteInactividad();
-
-  // ... resto del código que ya tenías (cargarDatos, renderDashboard, etc.)
-
-} // <- esta es la llave que cierra init()
   // Mostrar email del usuario en el sidebar
   const emailEl = document.getElementById('sidebar-email');
   if (emailEl) emailEl.textContent = getUserEmail() || '';
-
   const now = new Date();
   document.getElementById('reg-fecha').value = now.toISOString().split('T')[0];
   await cargarDatos();
