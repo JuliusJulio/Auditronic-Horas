@@ -83,7 +83,7 @@ const SUBTAREAS = {
   'FORMACIÓN': ['Interna', 'Externa'],
   'SEGUIMIENTO A RECOMENDACIONES': ['--'],
   'COORDINACIÓN Y SUPERVISIÓN': ['Reunión entre auditores', 'Plan Anual de Auditoría', 'Soporte a Accionistas', 'Transición a MIPP'],
-  'OTRAS ACTIVIDADES': ['Relacionadas con Auditoría Interna', 'No relacionadas con Auditoría Interna', 'Trabajo administrativo y de archivo', 'OKR Organización o de Equipo', 'Decomiso', 'Inventarios (No trabajos de auditoría)', 'Calibración equipos', 'Participación tareas Ganadera'],
+  'OTRAS ACTIVIDADES': ['Relacionadas con Auditoría Interna', 'No relacionadas con Auditoría Interna', 'Trabajo administrativo y de archivo', 'OKR Organización o de Equipo', 'Calibración equipos', 'Participación tareas Ganadera'],
   'AUSENCIAS JUSTIFICADAS': ['--'],
   'FESTIVOS Y VACACIONES': ['--']
 };
