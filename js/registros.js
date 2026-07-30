@@ -155,8 +155,12 @@ function renderHoras() {
       subHtml = `<span style="font-size:12px;color:var(--muted);">${(!r.subtarea || r.subtarea === '--') ? '—' : r.subtarea}</span>`;
     }
     // ▸ PUNTO 4: Notas completas (sin truncar, word-wrap)
+    const [_y, _m, _d] = r.fecha.split('-').map(Number);
+    const diasSem = ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'];
+    const diaIni = diasSem[new Date(_y, _m - 1, _d).getDay()];
     tbody.innerHTML += `<tr>
       <td style="font-family:var(--mono);font-size:12px;white-space:nowrap;">${r.fecha}</td>
+      <td style="font-family:var(--mono);font-size:12px;font-weight:600;color:var(--muted);">${diaIni}</td>
       <td><div style="display:flex;align-items:center;gap:7px;"><div class="avatar" style="width:26px;height:26px;font-size:10px;">${aud.nombre.slice(0, 2).toUpperCase()}</div><span>${aud.nombre}</span></div></td>
       <td>${tipoHtml}</td><td>${tareaHtml}</td><td>${subHtml}</td>
       <td style="font-family:var(--mono);font-weight:600;color:var(--accent);">${r.horas.toFixed(1)}h</td>
@@ -168,7 +172,7 @@ function renderHoras() {
   // ▸ PUNTO 3: Fila de total
   if (tfoot) {
     tfoot.innerHTML = regs.length
-      ? `<tr><td colspan="5" style="text-align:right;font-family:var(--mono);font-size:12px;">Total:</td><td style="font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px;">${totalHoras.toFixed(1)}h</td><td colspan="2"></td></tr>`
+      ? `<tr><td colspan="6" style="text-align:right;font-family:var(--mono);font-size:12px;">Total:</td><td style="font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px;">${totalHoras.toFixed(1)}h</td><td colspan="2"></td></tr>`
       : '';
   }
 }
