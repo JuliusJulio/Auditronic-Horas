@@ -114,7 +114,7 @@ function renderRepEncargos(regs) {
     const pct = e.presupuesto > 0 ? Math.min(100, Math.round(exec / e.presupuesto * 100)) : 0;
     const rest = e.presupuesto > 0 ? Math.max(0, e.presupuesto - exec) : 0;
     const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--green)';
-    const bE = e.estado === 'Activo' ? 'badge-green' : e.estado === 'Finalizado' ? 'badge-muted' : 'badge-amber';
+    const bE = e.estado === 'Activo' ? 'badge-green' : e.estado === 'Concluido' ? 'badge-muted' : e.estado === 'Borrador' ? 'badge-blue' : 'badge-amber';
     const bT = tipoBadge[e.tipo] || 'badge-muted';
     tbody.innerHTML += `<tr>
       <td>${e.cliente}</td><td style="font-weight:500;">${e.nombre}</td>
