@@ -35,7 +35,7 @@ function renderEncargos() {
     const exec = db.registros.filter(r => (r.encargo_id || r.encargoId) === e.id).reduce((s, r) => s + r.horas, 0);
     const pct = e.presupuesto > 0 ? Math.min(100, Math.round(exec / e.presupuesto * 100)) : 0;
     const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--green)';
-    const bE = e.estado === 'Activo' ? 'badge-green' : e.estado === 'Finalizado' ? 'badge-muted' : 'badge-amber';
+    const bE = e.estado === 'Activo' ? 'badge-green' : e.estado === 'Definitivo' ? 'badge-muted' : e.estado === 'Borrador' ? 'badge-blue' : 'badge-amber';
     const tc = tipoClass[e.tipo] || '';
     const tb = tipoBadge[e.tipo] || 'badge-muted';
     const esPlanActivo = e.plan === planActivo;
