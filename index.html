@@ -548,11 +548,21 @@
       <label class="form-label">Descripción</label>
       <textarea class="form-textarea" id="otro-desc" placeholder="Descripción breve…" style="min-height:60px;"></textarea>
     </div>
-    <div class="form-group">
-      <label class="form-label">Presupuesto de horas (opcional)</label>
-      <input type="number" class="form-input" id="otro-presupuesto" min="0" step="0.5" placeholder="0">
-      <div class="form-hint">Deja en 0 si no aplica</div>
-    </div>
+    <div class="form-row">
+  <div class="form-group">
+    <label class="form-label">Presupuesto de horas (opcional)</label>
+    <input type="number" class="form-input" id="otro-presupuesto" min="0" step="0.5" placeholder="0">
+    <div class="form-hint">Deja en 0 si no aplica</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Estado</label>
+    <select class="form-select" id="otro-estado">
+      <option value="Activo">Activo</option>
+      <option value="Definitivo">Definitivo</option>
+      <option value="Borrador">Borrador</option>
+    </select>
+  </div>
+</div>
     <div class="form-group">
       <label class="form-label">Auditores asignados</label>
       <div id="otro-auditores-list" style="display:flex;flex-wrap:wrap;gap:8px;padding:10px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;min-height:42px;"></div>
