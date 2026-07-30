@@ -290,11 +290,11 @@
       <select class="form-select" style="width:160px;" id="encargos-filtro-plan" onchange="renderEncargos()">
         <option value="">Todos los planes</option>
       </select>
-      <select class="form-select" style="width:140px;" id="encargos-filtro-estado" onchange="renderEncargos()">
-        <option value="">Todos los estados</option>
-        <option value="Activo">Activo</option>
-        <option value="Finalizado">Finalizado</option>
-        <option value="Pendiente">Pendiente</option>
+      <select class="form-select" id="enc-estado">
+  <option value="Activo">Activo</option>
+  <option value="Pendiente">Pendiente</option>
+  <option value="Definitivo">Concluido</option>
+  <option value="Borrador">Borrador</option>
       </select>
       <!-- PUNTO 5: Filtro "Personal a cargo" -->
       <select class="form-select" style="width:160px;" id="encargos-filtro-auditor" onchange="renderEncargos()">
