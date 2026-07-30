@@ -20,7 +20,7 @@ function renderOtros() {
   });
   if (savedSoc) selSoc.value = savedSoc;
 
-  // Leer filtros (después de restaurar para asegurar valor correcto)
+  // Leer filtros
   const search = (document.getElementById('otros-search').value || '').toLowerCase();
   const filtroSoc = selSoc.value;
   const filtroAud = document.getElementById('otros-filtro-auditor').value;
@@ -44,10 +44,18 @@ function renderOtros() {
     const exec = db.registros.filter(r => r.otro_id === o.id).reduce((s, r) => s + r.horas, 0);
     const pct = o.presupuesto > 0 ? Math.min(100, Math.round(exec / o.presupuesto * 100)) : 0;
     const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--green)';
+    const estado = o.estado || 'Activo';
+    const bE = estado === 'Activo' ? 'badge-green'
+      : estado === 'Definitivo' ? 'badge-muted'
+      : estado === 'Borrador' ? 'badge-blue'
+      : 'badge-muted';
     grid.innerHTML += `<div class="encargo-card tipo-otro">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
         <div class="encargo-client">${o.sociedad || ''}</div>
-        <span class="badge badge-orange">Otro trabajo</span>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+          <span class="badge badge-orange">Otro trabajo</span>
+          <span class="badge ${bE}">${estado}</span>
+        </div>
       </div>
       <div class="encargo-name">${o.nombre}</div>
       ${o.codigo ? `<div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:6px;">Código: ${o.codigo}</div>` : ''}
@@ -78,6 +86,8 @@ function renderOtros() {
 
 function abrirModalOtro(id) {
   editOtroId = id || null;
+  // Llenar dropdown de sociedades del catálogo
+  llenarSelectSociedades('otro-sociedad', true);
   document.getElementById('modal-otro-title').textContent = id ? 'Editar trabajo' : 'Nuevo otro trabajo';
   if (id) {
     const o = db.otros.find(x => x.id === id) || {};
@@ -86,9 +96,12 @@ function abrirModalOtro(id) {
     document.getElementById('otro-codigo').value = o.codigo || '';
     document.getElementById('otro-desc').value = o.descripcion || '';
     document.getElementById('otro-presupuesto').value = o.presupuesto || '';
+    document.getElementById('otro-estado').value = o.estado || 'Activo';
     renderAuditoresCheck('otro-auditores-list', toArray(o.auditores_ids));
   } else {
-    ['otro-nombre', 'otro-sociedad', 'otro-codigo', 'otro-desc', 'otro-presupuesto'].forEach(i => document.getElementById(i).value = '');
+    ['otro-nombre', 'otro-codigo', 'otro-desc', 'otro-presupuesto'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('otro-sociedad').value = '';
+    document.getElementById('otro-estado').value = 'Activo';
     renderAuditoresCheck('otro-auditores-list', []);
   }
   document.getElementById('modal-otro').classList.add('open');
@@ -106,6 +119,7 @@ async function guardarOtro() {
     codigo: document.getElementById('otro-codigo').value.trim(),
     descripcion: document.getElementById('otro-desc').value.trim(),
     presupuesto: parseFloat(document.getElementById('otro-presupuesto').value) || 0,
+    estado: document.getElementById('otro-estado').value,
     auditores_ids: getSelectedAuditores('otro-auditores-list'),
   };
   if (SB_LISTO) {
