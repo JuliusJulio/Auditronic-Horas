@@ -106,7 +106,7 @@ function updateEncargoSelect() {
   const sel = document.getElementById('reg-encargo');
   const prev = sel.value;
   sel.innerHTML = '<option value="">— seleccionar trabajo —</option>';
-  db.encargos.filter(e => e.estado === 'Activo').forEach(e => {
+  db.encargos.filter(e => e.estado === 'Activo' || e.estado === 'Borrador').forEach(e => {
     const o = document.createElement('option');
     o.value = e.id;
     o.textContent = e.cliente + ' — ' + e.nombre;
@@ -119,7 +119,7 @@ function updateOtroSelect() {
   const sel = document.getElementById('reg-otro');
   const prev = sel.value;
   sel.innerHTML = '<option value="">— seleccionar —</option>';
-  db.otros.forEach(o => {
+  db.otros.filter(o => o.estado === 'Activo' || o.estado === 'Borrador' || !o.estado).forEach(o => {
     const op = document.createElement('option');
     op.value = o.id;
     op.textContent = o.nombre;
