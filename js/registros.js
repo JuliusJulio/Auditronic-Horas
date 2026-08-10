@@ -95,6 +95,22 @@ function limpiarFormRegistro() {
 // Guarda los registros filtrados para el CSV
 let _filteredRegs = [];
 
+// ▸ Paginación "Ver más"
+const HORAS_PAGE_SIZE = 50;
+let _horasVisibleCount = HORAS_PAGE_SIZE;
+
+// Se llama desde los filtros/búsqueda: reinicia el contador a la primera tanda
+function renderHorasReset() {
+  _horasVisibleCount = HORAS_PAGE_SIZE;
+  renderHoras();
+}
+
+// Se llama desde el botón "Ver más": muestra la siguiente tanda
+function verMasHoras() {
+  _horasVisibleCount += HORAS_PAGE_SIZE;
+  renderHoras();
+}
+
 function renderHoras() {
   const search = document.getElementById('horas-search').value.toLowerCase();
   const filtroTipo = document.getElementById('horas-filtro-tipo').value;
@@ -132,11 +148,13 @@ function renderHoras() {
   document.getElementById('horas-count').textContent = regs.length + ' registros';
   tbody.innerHTML = '';
 
-  // ▸ PUNTO 3: Sumar horas filtradas
-  let totalHoras = 0;
+  // ▸ Total de horas: suma TODOS los registros filtrados (no solo los visibles)
+  const totalHoras = regs.reduce((s, r) => s + r.horas, 0);
 
-  regs.forEach(r => {
-    totalHoras += r.horas;
+  // ▸ Paginación: pintar solo hasta el límite actual
+  const visibles = regs.slice(0, _horasVisibleCount);
+
+  visibles.forEach(r => {
     const aud = db.auditores.find(a => a.id === (r.auditor_id || r.auditorId)) || { nombre: '?' };
     let tipoHtml = '', tareaHtml = '', subHtml = '';
     if (r.tipo === 'encargo') {
@@ -175,6 +193,20 @@ function renderHoras() {
     tfoot.innerHTML = regs.length
       ? `<tr><td colspan="6" style="text-align:right;font-family:var(--mono);font-size:12px;">Total:</td><td style="font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14px;">${totalHoras.toFixed(1)}h</td><td colspan="2"></td></tr>`
       : '';
+  }
+
+  // ▸ Botón "Ver más" (paginación)
+  const verMasBox = document.getElementById('horas-vermas');
+  if (verMasBox) {
+    if (regs.length > _horasVisibleCount) {
+      const restantes = regs.length - _horasVisibleCount;
+      const siguiente = Math.min(HORAS_PAGE_SIZE, restantes);
+      verMasBox.innerHTML = `<button class="btn btn-ghost" onclick="verMasHoras()">Ver ${siguiente} más · quedan ${restantes}</button>`;
+      verMasBox.style.display = 'flex';
+    } else {
+      verMasBox.innerHTML = '';
+      verMasBox.style.display = 'none';
+    }
   }
 }
 
