@@ -7,7 +7,7 @@ function showView(name) {
     if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + name + "'")) n.classList.add('active');
   });
   if (name === 'dashboard') renderDashboard();
-  if (name === 'horas') renderHoras();
+  if (name === 'horas') renderHorasReset();
   if (name === 'encargos') renderEncargos();
   if (name === 'otros') renderOtros();
   if (name === 'equipo') renderEquipo();
