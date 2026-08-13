@@ -35,11 +35,11 @@ function renderEncargos() {
     const exec = db.registros.filter(r => (r.encargo_id || r.encargoId) === e.id).reduce((s, r) => s + r.horas, 0);
     const pct = e.presupuesto > 0 ? Math.min(100, Math.round(exec / e.presupuesto * 100)) : 0;
     const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--green)';
-    const bE = e.estado === 'Activo' ? 'badge-green'
-      : e.estado === 'Definitivo' ? 'badge-muted'
-      : e.estado === 'Borrador' ? 'badge-blue'
-      : e.estado === 'Pendiente' ? 'badge-amber'
-      : 'badge-muted';
+    const colorEstado = e.estado === 'Activo' ? '#dc2626'
+      : e.estado === 'Borrador' ? '#d97706'
+      : e.estado === 'Definitivo' ? '#16a34a'
+      : e.estado === 'Pendiente' ? '#6b7280'
+      : '#6b7280';
     const tc = tipoClass[e.tipo] || '';
     const tb = tipoBadge[e.tipo] || 'badge-muted';
     const esPlanActivo = e.plan === planActivo;
@@ -57,7 +57,7 @@ function renderEncargos() {
           <div class="encargo-hours-val">${exec.toFixed(1)}h</div>
           <div class="encargo-budget-label">${e.presupuesto > 0 ? 'de ' + e.presupuesto + 'h presupuestadas' : 'Sin presupuesto'}</div>
         </div>
-        <span class="badge ${bE}">${e.estado}</span>
+        <span style="display:inline-flex;align-items:center;font-size:14px;font-weight:700;padding:5px 14px;border-radius:99px;background:${colorEstado}22;color:${colorEstado};">${e.estado}</span>
       </div>
       ${e.presupuesto > 0 ? `<div class="prog-wrap" style="margin-bottom:8px;"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${color};"></div></div><span class="prog-pct">${pct}%</span></div>` : ''}
       ${e.inicio || e.fin ? `<div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${e.inicio || ''}${e.fin ? ' → ' + e.fin : ''}</div>` : ''}
