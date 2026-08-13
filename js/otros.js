@@ -45,16 +45,16 @@ function renderOtros() {
     const pct = o.presupuesto > 0 ? Math.min(100, Math.round(exec / o.presupuesto * 100)) : 0;
     const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--green)';
     const estado = o.estado || 'Activo';
-    const bE = estado === 'Activo' ? 'badge-green'
-      : estado === 'Definitivo' ? 'badge-muted'
-      : estado === 'Borrador' ? 'badge-blue'
-      : 'badge-muted';
+    const colorEstado = estado === 'Activo' ? '#dc2626'
+      : estado === 'Borrador' ? '#d97706'
+      : estado === 'Definitivo' ? '#16a34a'
+      : '#6b7280';
     grid.innerHTML += `<div class="encargo-card tipo-otro">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
         <div class="encargo-client">${o.sociedad || ''}</div>
         <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
           <span class="badge badge-orange">Otro trabajo</span>
-          <span class="badge ${bE}">${estado}</span>
+          <span style="display:inline-flex;align-items:center;font-size:14px;font-weight:700;padding:5px 14px;border-radius:99px;background:${colorEstado}22;color:${colorEstado};">${estado}</span>
         </div>
       </div>
       <div class="encargo-name">${o.nombre}</div>
