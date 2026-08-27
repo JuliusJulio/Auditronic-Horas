@@ -326,6 +326,12 @@
       <select class="form-select" style="width:160px;" id="otros-filtro-auditor" onchange="renderOtros()">
         <option value="">Personal a cargo</option>
       </select>
+      <select class="form-select" style="width:150px;" id="otros-filtro-estado" onchange="renderOtros()">
+        <option value="">Todos los estados</option>
+        <option value="Activo">Activo</option>
+        <option value="Definitivo">Definitivo</option>
+        <option value="Borrador">Borrador</option>
+      </select>
     </div>
     <div class="encargos-grid" id="otros-grid"></div>
     <div class="empty" id="otros-empty"><div class="empty-icon">◧</div><div class="empty-text">No hay otros trabajos creados</div></div>
