@@ -24,7 +24,8 @@ function renderOtros() {
   const search = (document.getElementById('otros-search').value || '').toLowerCase();
   const filtroSoc = selSoc.value;
   const filtroAud = document.getElementById('otros-filtro-auditor').value;
-
+  const filtroEstado = document.getElementById('otros-filtro-estado').value;
+  
   // Aplicar filtros
   const filtrados = db.otros.filter(o => {
     const matchTexto = !search ||
@@ -33,7 +34,8 @@ function renderOtros() {
       (o.codigo || '').toLowerCase().includes(search);
     const matchSoc = !filtroSoc || o.sociedad === filtroSoc;
     const matchAud = !filtroAud || toArray(o.auditores_ids).includes(filtroAud);
-    return matchTexto && matchSoc && matchAud;
+    const matchEstado = !filtroEstado || o.estado === filtroEstado;
+    return matchTexto && matchSoc && matchAud && matchEstado;
   });
 
   const grid = document.getElementById('otros-grid');
